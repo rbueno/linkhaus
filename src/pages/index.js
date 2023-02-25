@@ -862,10 +862,13 @@ export function LandingPage() {
 }
 
 Home.propTypes = {
-  business: PropTypes.object
+  business: PropTypes.object,
+  client: PropTypes.string
 }
 
-export default function Home({ business }) {
+export default function Home({ business, client }) {
+  console.log('== business', business)
+  console.log('== client', client)
   if (business.pageSlug) return <UserProfilePage business={business} />
   if (business.iswww) return <LandingPage />
   return <LandingPage />
@@ -878,6 +881,7 @@ export const getServerSideProps = async (prop) => {
     return {
       props: {
         business:{ iswww: true },
+        client
       },
     }
   }
@@ -889,7 +893,8 @@ export const getServerSideProps = async (prop) => {
   // console.log('business', business)
   return {
     props: {
-      business: data.myPage
+      business: data.myPage,
+      client
     },
   }
   } catch (error) {
@@ -897,6 +902,7 @@ export const getServerSideProps = async (prop) => {
     return {
       props: {
         business:{ iswww: false },
+        client
       },
     }
   }
