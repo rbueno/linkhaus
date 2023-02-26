@@ -6,7 +6,7 @@ import Script from 'next/script'
 import Head from 'next/head';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Tab, Tabs, Box, Typography, Button, Card, TextField, Stack, IconButton, Divider } from '@mui/material';
+import { Container, Grid, Tab, Tabs, Box, Typography, Button, Card, TextField, Stack, IconButton, Divider, Alert, AlertTitle } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 import { v4 as uuidv4 } from 'uuid'
@@ -96,7 +96,7 @@ const TABS = [
   },
   {
     value: 'googlemaps',
-    label: 'Mapa',
+    label: 'Google Maps',
     icon: <Iconify icon="ic:round-vpn-key" />,
     component: <Box>Informe o seu endereço físico com um mapa super dinâmico</Box>,
   },
@@ -104,24 +104,32 @@ const TABS = [
 
 const buildComponent = ({component, theme, businessSlug, businessId, setSettingVisible, settingVisible, data }) => {
   const iconComponent = component?.props?.icon && buildIcon(component.props.icon)
-
+  const componentDisplayName = () => TABS.find(item => item.value === component.type).label
   // <Button component={NextLink} href="/" size="large" variant="contained">
   //         Go to Home
   //       </Button>
 
   if (!component?.props) {
-    return <Button
+    return <Box
     fullWidth
       size="large"
-      variant="outlined"
-      onClick={() => setSettingVisible( settingVisible === component.componentId ? null : component.componentId )} disableRipple
+      // variant="outlined"
+
+      // onClick={() => setSettingVisible( settingVisible === component.componentId ? null : component.componentId )} disableRipple
     >
-      Clique aqui para editar
-    </Button>
+      {/* <Typography >Novo item adicionado</Typography>
+      <Typography>tipo: {componentDisplayName()}</Typography> */}
+      <Alert severity='success'>
+                  <AlertTitle sx={{ textTransform: 'capitalize' }}> Novo item adicionado </AlertTitle>
+                  tipo: {componentDisplayName()}
+                </Alert>
+      
+    </Box>
   }
   if (component.type === 'linkButton') {
     return (
       <Button
+      fullWidth
       {...(iconComponent ? { startIcon: iconComponent.iconComponent } : {})}
       //  startIcon={iconComponent.iconComponent}
           size="large"
@@ -292,6 +300,49 @@ const EditBlockTitle = ({ sectionId, title: currentTitle, saveItemEdition, isOpe
       </Box>
     }
     </>
+  )
+}
+const AddNewItem = ({ addComponent, isOpen }) => {
+  const [currentTab, setCurrentTab] = useState('linkButton');
+const [addingItem, setAddingItem] = useState(false)
+  const action = async (componentValue) => {
+    setAddingItem(true)
+    try {
+      await addComponent(componentValue)
+    } catch (error) {
+      console.log(error)
+    }
+    setAddingItem(false)
+    isOpen(false)
+  }
+  
+
+  return (
+    <Box>
+     <Box display='flex' alignItems='center' justifyContent='center' m={2}>
+          <Typography variant='subtitle2'>Adicionar novo item nesta seção</Typography>
+
+        </Box>
+        <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
+            {TABS.map((tab) => (
+              <Tab key={tab.value} label={tab.label} icon={tab.icon} value={tab.value} />
+            ))}
+          </Tabs>
+
+          {TABS.map(
+            (tab) =>
+              tab.value === currentTab && (
+                <Box key={tab.value}>
+                <Box sx={{ mt: 2 }}>
+                  {tab.component}
+                </Box>
+                <Box sx={{ mt: 2 }}>
+                  <LoadingButton loading={addingItem} variant='contained' onClick={() => action(tab.value)}>Adicionar {tab.label}</LoadingButton>
+                </Box>
+                </Box>
+              )
+          )}  
+    </Box>
   )
 }
 
@@ -1113,7 +1164,7 @@ const Section = ({
   setSettingSectionsVisible
 }) => {
 
-  const [currentTab, setCurrentTab] = useState('linkButton');
+  
   const [openEditItemBlock, setOpenEditItemBlock] = useState(false);
   const [dialogContent, setDialogContent] = useState(null)
   const [settingVisible, setSettingVisible] = useState(null)
@@ -1199,6 +1250,11 @@ const theme = useTheme()
     }
   }
 
+  const handleAddComponent = () => {
+    setDialogContent(<AddNewItem addComponent={addComponent} isOpen={setOpenEditItemBlock} sectionId='' businessSlug={businessSlug} />)
+    setOpenEditItemBlock(true)
+  }
+
   const upwardComponent = async (idx, currentSection) => {
 
     if (idx === 0) return
@@ -1252,7 +1308,7 @@ const theme = useTheme()
   return (
     <>
     <Box sx={{ mt: 2, mb: 2 }}>
-      <Card sx={{ p: 1 }}>
+      <Card >
 
       {/* <Container fullWidth> */}
       <Stack
@@ -1289,7 +1345,7 @@ const theme = useTheme()
         }
         <Box display='flex' alignItems='center' justifyContent='center'>
           {
-            !section.title && <Typography variant='caption'>Título do bloco (opcional)</Typography>
+            !section.title && <Typography variant='caption'>Título da seção (opcional)</Typography>
           }
           {
             section.title && <Typography variant='h5'>{section.title}</Typography>
@@ -1304,18 +1360,18 @@ const theme = useTheme()
 
             {
               section.components?.length > 0 && section.components.map((component, idx) => (
-                <Box key={component.componentId}>
-                        <Box display='flex' alignItems='start' justifyContent='center' mb={2}>
-                                <Box sx={{ width: '100%'}}>
-                                {
-                                    settingVisible === component.componentId && <Box
+                <Box key={component.componentId} mb={2} ml={1} mr={1}>
+                <Card  >
+                <Box mt={1} mb={1} >
+                        {buildComponent({ component, theme, businessSlug: 'fake_slug', businessId, setSettingVisible, settingVisible, data: myPageData })}
+                        <Box
                                     display='flex'
                                     alignItems='center'
                                     justifyContent='space-between'
                                     sx={{
-                                      backgroundColor: '#F6F6F5',
+                                      // backgroundColor: '#F6F6F5',
                                       // border: '#C0C0C0 1px solid',
-                                      marginTop: '22px'
+                                      // marginBottom: '22px'
                                     }}
                                   >
                                           <Box>
@@ -1328,26 +1384,14 @@ const theme = useTheme()
                                           </Box>
 
                                       
-                                        <Button variant='contained' sx={{ m: 1 }} size="small" onClick={() => editItemComponent(component)} >
-                                          Editar
+                                        <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => editItemComponent(component)} >
+                                          <SettingsIcon fontSize='small' /> Editar
                                         </Button>
                                   </Box>
-                                    
-                                  }
-                                  {buildComponent({ component, theme, businessSlug: 'fake_slug', businessId, setSettingVisible, settingVisible, data: myPageData })}
-                                 
-
-                                  
-                                  
-
-
-                                </Box>
-                                <IconButton sx={{ m: 1 }} size="small" onClick={() => setSettingVisible( settingVisible === component.componentId ? null : component.componentId )} >
-                                  <EditIcon fontSize='small'/>
-                                </IconButton>
-                        </Box>
 
                     
+                </Box>
+                </Card>
                 </Box>
               ))
             }
@@ -1355,9 +1399,9 @@ const theme = useTheme()
         </Stack>
       {/* </Container> */}
       <Divider />
-      <Box m={2}>
-      <Box display='flex' alignItems='center' justifyContent='center' m={2}>
-          <Typography variant='subtitle2'>Escolha um elementos e clique em adicionar</Typography>
+      <Box m={2} display='flex' justifyContent='center'>
+        {/* <Box display='flex' alignItems='center' justifyContent='center' m={2}>
+          <Typography variant='subtitle2'>Adicionar novo item nesta seção</Typography>
 
         </Box>
         <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
@@ -1378,7 +1422,8 @@ const theme = useTheme()
                 </Box>
                 </Box>
               )
-          )}
+          )} */}
+          <Button variant='contained' onClick={() => handleAddComponent()}>Adicionar novo item</Button>
       </Box>
       </Card>
     </Box>
@@ -1514,7 +1559,7 @@ export default function MyPage() {
       /> */}
       </Head>
 
-      <Container maxWidth='sm'>
+      <Container disableGutters maxWidth='sm'>
         {/* <Box m={2}>
         <Typography variant='h3'>MyPage</Typography>
         <Typography variant='subtitle2'>Uma pagina com seu principal conteúdo</Typography>

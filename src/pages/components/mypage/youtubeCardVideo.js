@@ -41,12 +41,7 @@ YoutubeCardVideo.propTypes = {
 }
 
 export default function YoutubeCardVideo({ title, videoId, businessSlug, businessId, pageId, component, eventEntry, subscriptionLink, subscriptionLinkLabel}) {
-  const [expanded, setExpanded] = React.useState(false);
   const theme = useTheme()
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
 
   const handleEventEntry = () => {
     if ( !['fake_slug', undefined, null].includes(businessSlug)) {
@@ -93,7 +88,7 @@ export default function YoutubeCardVideo({ title, videoId, businessSlug, busines
   title={title}                    // defaults -> ''
   // loading={string}                  // defaults -> undefined
   opts={{
-    height: '390',
+    height: '310',
     width: '100%',
   }
 }                        // defaults -> {}
