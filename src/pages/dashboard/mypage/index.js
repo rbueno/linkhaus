@@ -56,11 +56,13 @@ import {
   AccountSocialLinks,
   AccountNotifications,
   AccountChangePassword,
+  MyPageAvatar
 } from '../../../sections/@dashboard/mypage/account';
 import EditBlockTitleDialog from '../../../sections/@dashboard/mypage/editBlockitemDialog/EditBlockTitleDialog'
 
 import { useAuthContext } from '../../../auth/useAuthContext'
 import api from '../../../utils/axios'
+import slugify from '../../../utils/slugify'
 
 // ----------------------------------------------------------------------
 
@@ -1124,6 +1126,256 @@ const EditParagraph = ({ currentItemState, saveItemEdition, isOpen, businessSlug
   )
 }
 
+const EditSlug = ({ currentWorkspace, updateWorkspaces, isOpen }) => {
+  const [slug, setSlug] = useState(currentWorkspace.businessId.slug);
+  const [slugError, setSlugError] = useState(null);
+  const [submittingSlug, setSubmittingSlug] = useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
+ 
+  const alphanumeric = /^[-0-9a-zA-Z]+$/;
+
+  const HandleSlugField = (e) => {
+    if (e.length > 70) return;
+    const newSlug = slugify(e);
+
+    if(newSlug.match(alphanumeric)) {
+      setSlug(newSlug.toLowerCase())
+      setSlugError(null)
+    } else {
+      setSlug(newSlug)
+      setSlugError('Caractere não permitido. Utilize apenas letras e números!')
+
+    }    
+  };
+
+  const onSubmitBusinessSlug = async () => {
+    setSubmittingSlug(true)
+    const payload ={
+      slug,
+    }
+
+    try {
+      const response = await api.put('v1/business/slug', payload)
+      const { workspaceSession } = response.data
+
+      // updateWorkspaces(workspaceSession)
+      updateWorkspaces(workspaceSession)
+      enqueueSnackbar('Mudança concluída');
+      isOpen(false)
+    } catch (error) {
+      enqueueSnackbar(error.message && error.message, { variant: 'error' });
+      console.error(error);
+    }
+    setSubmittingSlug(false)
+  }
+
+  const action = async () => {
+    
+    isOpen(false)
+  }
+
+
+
+  return (
+    <Box >
+          
+             <Box
+              sx={{
+                display: 'grid',
+                columnGap: 1,
+                rowGap: 3,
+                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' },
+              }}
+            >
+                  <Box>
+                    {/* <FormGroup> */}
+                    <Box display='flex' flexDirection='column'>
+
+                    <Typography sx={{ mr: 1 }}>Link:</Typography>
+                    <p style={{ fontSize: '12px'}}>https://<strong><span style={{ fontSize: '16px'}}>{slug || 'seu-nome-aqui'}</span></strong>.linkhaus.app</p>
+                    </Box>
+                      <TextField
+                      fullWidth
+                        label="Link de compartilhamento"
+                        value={slug}
+                        color="primary"
+                        placeholder="Ex.: linkhaus"
+                        error={slugError !== null}
+                        helperText={slugError && slugError}
+                        onChange={(e) => HandleSlugField(e.target.value)}
+                        // InputProps={{
+                        //   startAdornment: <InputAdornment position="start">@</InputAdornment>,
+                        // }}
+                      />
+                    {/* </FormGroup> */}
+                  </Box>
+            </Box>
+
+            <Stack alignItems="flex-end" sx={{ mt: 3 }}>
+              <LoadingButton onClick={() => onSubmitBusinessSlug()} variant="contained" loading={submittingSlug}>
+                Atualizar
+              </LoadingButton>
+            </Stack>
+          
+          </Box>
+  )
+}
+const EditBusinessName = ({ currentWorkspace, updateWorkspaces, isOpen }) => {
+  const [businessName, setBusinessName] = useState(currentWorkspace.businessId.name);
+  const [businessNameError, setBusinessNameError] = useState(null);
+  const [submittingBusinessName, setSubmittingBusinessName] = useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleBusinessDisplayName = (name) => {
+    if (name.length > 60) return;
+    // setDisplayName(name);
+    setBusinessName(name)
+    // HandleSlugField(name.trim());
+  };
+
+  const onSubmitBusinessName = async () => {
+    setSubmittingBusinessName(true)
+    const payload ={
+      businessName: businessName.trim(),
+    }
+
+    try {
+      const response = await api.put('v1/business/name', payload)
+      const { workspaceSession } = response.data
+
+      // updateWorkspaces(workspaceSession)
+      updateWorkspaces(workspaceSession)
+      enqueueSnackbar('Mudança concluída');
+      isOpen(false)
+    } catch (error) {
+      enqueueSnackbar(error.message && error.message, { variant: 'error' });
+      console.error(error);
+    }
+    setSubmittingBusinessName(false)
+  };
+
+  const action = async () => {
+    
+    isOpen(false)
+  }
+
+
+
+  return (
+    <Box m={2}>
+          
+          
+            
+              
+                  <Box >
+                      <TextField
+                      fullWidth
+                        label="Nome"
+                        value={businessName}
+                        color="primary"
+                        placeholder="Ex.: Linkhaus"
+                        // error={newBusinessNameError !== null}
+                        onChange={(e) => handleBusinessDisplayName(e.target.value)}
+                      />
+                  </Box>
+
+                  
+           
+
+            <Stack alignItems="flex-end" sx={{ mt: 3 }}>
+              <LoadingButton onClick={() => onSubmitBusinessName()} variant="contained" loading={submittingBusinessName}>
+                Atualizar
+              </LoadingButton>
+            </Stack>
+
+          </Box>
+          
+
+  )
+}
+const EditBusinessDescription = ({ currentWorkspace, updateWorkspaces, isOpen }) => {
+  const [businessDescription, setBusinessDescription] = useState(currentWorkspace.businessId.description);
+  const [businessDescriptionError, setBusinessDescriptionError] = useState(null);
+  const [submittingBusinessDescription, setSubmittingBusinessDescription] = useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+
+  const handleBusinessDescrilption = (description) => {
+    if (description.length > 360) return;
+    // setDisplayName(name);
+    setBusinessDescription(description)
+    // HandleSlugField(name.trim());
+  };
+
+  const onSubmitBusinessDescription = async () => {
+    setSubmittingBusinessDescription(true)
+
+    const payload ={
+      businessDescription,
+    }
+
+    try {
+      const response = await api.put('v1/business/description', payload)
+      const { workspaceSession } = response.data
+
+      // updateWorkspaces(workspaceSession)
+      updateWorkspaces(workspaceSession)
+      enqueueSnackbar('Mudança concluída');
+      isOpen(false)
+    } catch (error) {
+      enqueueSnackbar(error.message && error.message, { variant: 'error' });
+      console.error(error);
+    }
+    setSubmittingBusinessDescription(false)
+  };
+
+  const action = async () => {
+    
+    isOpen(false)
+  }
+
+
+
+  return (
+    <Box m={2}>
+          
+                  <Box>
+                    {/* <FormGroup> */}
+                   
+                      <TextField
+                      fullWidth
+                      multiline
+                      rows={6}
+                        label="Descrição / bio"
+                        value={businessDescription}
+                        color="primary"
+                        placeholder="Ex.: Sobre a sua empresa ou sobre o seu perfil"
+                        error={businessDescriptionError !== null}
+                        helperText={businessDescriptionError && businessDescriptionError}
+                        onChange={(e) => handleBusinessDescrilption(e.target.value)}
+                        // InputProps={{
+                        //   startAdornment: <InputAdornment position="start">@</InputAdornment>,
+                        // }}
+                      />
+                    {/* </FormGroup> */}
+                  </Box>
+
+
+            <Stack alignItems="flex-end" sx={{ mt: 3 }}>
+              <LoadingButton onClick={() => onSubmitBusinessDescription()} variant="contained" loading={submittingBusinessDescription}>
+                Atualizar
+              </LoadingButton>
+            </Stack>
+
+          </Box>
+          
+
+  )
+}
+
 // const mock = [
 //   {
 //     id: '123',
@@ -1343,9 +1595,9 @@ const theme = useTheme()
               </Button>
         </Box>
         }
-        <Box display='flex' alignItems='center' justifyContent='center'>
+        <Box display='flex' alignItems='center' justifyContent='center' sx={{ paddingLeft: '45px'}}>
           {
-            !section.title && <Typography variant='caption'>Título da seção (opcional)</Typography>
+            !section.title && <Typography variant='body1'>Título da seção (opcional)</Typography>
           }
           {
             section.title && <Typography variant='h5'>{section.title}</Typography>
@@ -1439,6 +1691,8 @@ export default function MyPage() {
   const [sections, setSections] = useState([])
   // const [blocks, setBlocks] = useState([])
   const { currentWorkspace, updateWorkspaces } = useAuthContext()
+  const [openEditItemBlock, setOpenEditItemBlock] = useState(false);
+  const [dialogContent, setDialogContent] = useState(null)
   // console.log('refresh currentWorkspace', currentWorkspace.myPage.sections)
 
   useEffect(() => {
@@ -1545,6 +1799,19 @@ export default function MyPage() {
     setSections(updated)
   }
 
+  const handleDisplayEditLink = () => {
+    setDialogContent(<EditSlug isOpen={setOpenEditItemBlock} currentWorkspace={currentWorkspace} updateWorkspaces={updateWorkspaces} />)
+    setOpenEditItemBlock(true)
+  }
+  const handleDisplayEditBusinessName = () => {
+    setDialogContent(<EditBusinessName isOpen={setOpenEditItemBlock} currentWorkspace={currentWorkspace} updateWorkspaces={updateWorkspaces} />)
+    setOpenEditItemBlock(true)
+  }
+  const handleDisplayEditBusinessDescription = () => {
+    setDialogContent(<EditBusinessDescription isOpen={setOpenEditItemBlock} currentWorkspace={currentWorkspace} updateWorkspaces={updateWorkspaces} />)
+    setOpenEditItemBlock(true)
+  }
+
     return (
     <>
       <Head>
@@ -1564,10 +1831,70 @@ export default function MyPage() {
         <Typography variant='h3'>MyPage</Typography>
         <Typography variant='subtitle2'>Uma pagina com seu principal conteúdo</Typography>
         </Box> */}
+        <Box mb={2}>
+          <Card>
+              <Box m={2} >
+                <Alert severity='success' icon={false}>
 
-{
-  currentWorkspace?.myPage && <AccountGeneral />
-}
+                      <Box display='flex' flexDirection='column' alignItems='center'>
+                        {/* <Typography sx={{ mr: 1 }}>Seu link:</Typography> */}
+                        <Box display='flex' alignContent='center' alignItems='center'>
+                          <Typography sx={{ fontSize: '12px' }}>https://</Typography>
+                          <Typography sx={{ fontSize: '16px', fontWeight: '600' }}>{currentWorkspace?.businessId?.slug}</Typography>
+                          <Typography sx={{ fontSize: '12px' }}>.linkhaus.app</Typography>
+                        </Box>
+                      </Box>
+                </Alert>
+                    <Box display='flex' justifyContent='flex-end'>
+                      <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditLink()}> <SettingsIcon fontSize='small' /> Editar Link</Button>
+                      {/* <Button variant='outlined' sx={{ m: 1 }} size="small">Visualizar </Button>  */}
+                      <Button
+                        sx={{ m: 1 }}
+                        variant='outlined'
+                        // endIcon={(<ChangeCircleIcon fontSize="small" />)}
+                        // sx={{ mt: 3 }}
+                        // variant="contained"
+                        // sx={{ minHeight: 0, minWidth: 0, padding: 0 }}
+                        target="_blank"
+                        rel="noopener"
+                        href={`https://${currentWorkspace?.businessId?.slug}.linkhaus.app?ohlhv`}
+                        size="small"
+                      >
+                        Visualizar
+                    </Button>
+                    </Box>
+              </Box>
+          </Card>
+        </Box>
+
+        {
+          currentWorkspace?.myPage && <Box>
+            <Card sx={{ py: 2, px: 3, textAlign: 'center' }}>
+              <MyPageAvatar />
+              <Box display='flex' alignItems='center' justifyContent='center' sx={{ paddingLeft: '45px'}}>
+              
+                <Typography variant='h5'>{currentWorkspace?.businessId.name}</Typography>
+                <IconButton sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditBusinessName()}>
+                  <EditIcon fontSize='small'/>
+                </IconButton>
+              </Box>
+              
+              <Box display='flex' alignItems='center' justifyContent='center' sx={{ paddingLeft: '45px'}}>
+              
+                {
+                  !currentWorkspace?.businessId.description && <Typography variant='body1'>Descrição (opcional)</Typography>
+                }
+                {
+                  currentWorkspace?.businessId.description && <Typography variant='body1'>{currentWorkspace?.businessId.description}</Typography>
+                }
+                <IconButton sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditBusinessDescription()}>
+                  <EditIcon fontSize='small'/>
+                </IconButton>
+            </Box>
+
+            </Card>
+          </Box> 
+        }
         
 
         {
@@ -1580,6 +1907,7 @@ export default function MyPage() {
         </Box>
 
       </Container>
+      <EditBlockTitleDialog open={openEditItemBlock} content={dialogContent} onClose={() => setOpenEditItemBlock(false)}/>
     </>
   );
 }

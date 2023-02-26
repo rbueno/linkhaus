@@ -40,7 +40,7 @@ export default function WorkspacePopover() {
       {
         currentWorkspace ? (<Box display='flex' flexDirection='row' alignContent='center' alignItems='flex-end'>
         {/* <Typography sx={{ color: 'gray', fontSize: '12px'}} m={0} padding={0}>Área de trabalho: </Typography> */}
-        <Button
+        {/* <Button
               variant='contained'
               // endIcon={(<ChangeCircleIcon fontSize="small" />)}
               // sx={{ mt: 3 }}
@@ -52,7 +52,7 @@ export default function WorkspacePopover() {
               sx={{ mr: '15px'}}
             >
               Visualizar
-            </Button>
+            </Button> */}
         <Button
               variant='outlined'
               endIcon={(<ChangeCircleIcon fontSize="small" />)}

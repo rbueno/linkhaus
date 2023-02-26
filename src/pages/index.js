@@ -784,10 +784,21 @@ export function UserProfilePage({ business }) {
             width: '100%'
           }}
         >
-          <ProfileCover name={data.name} avatar={data.avatarURL} coverImage={data.backgroundImage} coverColor={data.backgroundImage} />
+          <ProfileCover name={data.name} description={data.description} avatar={data.avatarURL} coverImage={data.backgroundImage} coverColor={data.backgroundImage} />
         </Stack>
 
+        
       <Container maxWidth='sm'>
+        {
+          data.description && <Box sx={{
+            ml: { xs: 1, md: 1 },
+            mt: { xs: 1, md: 1 },
+            // color: 'common.white',
+            textAlign: { xs: 'center', md: 'center' },
+          }}>
+        <Typography textAlign="center" variant="body2">{data.description}</Typography>
+        </Box>
+        }
         
         {
           components.map(item => item)
