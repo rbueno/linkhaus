@@ -81,7 +81,7 @@ export const options = {
 
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
-export const data = {
+export const dataTeste = {
   labels,
   datasets: [
     {
@@ -98,7 +98,7 @@ export const data = {
 };
 
 export function GraphTest() {
-  return <Bar options={options} data={data} />;
+  return <Bar options={options} data={dataTeste} />;
 }
 
 
