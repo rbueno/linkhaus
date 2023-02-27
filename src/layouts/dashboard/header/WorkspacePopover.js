@@ -2,6 +2,8 @@ import NextLink from 'next/link'
 import { useState } from 'react';
 // @mui
 import { MenuItem, Stack, Typography, Box, Button, Divider } from '@mui/material';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
+
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 // hooks
@@ -53,6 +55,7 @@ export default function WorkspacePopover() {
             >
               Visualizar
             </Button> */}
+            {/* <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => {}}> <ColorLensIcon fontSize='small' /> Editar cor</Button> */}
         <Button
               variant='outlined'
               endIcon={(<ChangeCircleIcon fontSize="small" />)}

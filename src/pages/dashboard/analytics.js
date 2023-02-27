@@ -427,7 +427,7 @@ export default function GeneralBookingPage() {
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
-        <FetchController filterService={filterService} setFilterService={setFilterService} intervalType={intervalType} setIntervalType={setIntervalType} setData={setData}/>
+        {/* <FetchController filterService={filterService} setFilterService={setFilterService} intervalType={intervalType} setIntervalType={setIntervalType} setData={setData}/> */}
         <Grid container spacing={3}>
           <Grid item xs={6} md={6}>
             <BookingWidgetSummary
@@ -460,9 +460,9 @@ export default function GeneralBookingPage() {
               }}
             />
           </Grid> */}
-          <Grid item xs={12} md={12}>
+          {/* <Grid item xs={12} md={12}>
             <GraphTest />
-          </Grid>
+          </Grid> */}
 
        
         </Grid>

@@ -2,6 +2,7 @@
 import { alpha } from '@mui/material/styles';
 import { RadioGroup } from '@mui/material';
 //
+import { useEffect } from 'react';
 import { useSettingsContext } from '../SettingsContext';
 import { StyledCard, StyledWrap, MaskControl, StyledCircleColor } from '../styles';
 
@@ -9,6 +10,10 @@ import { StyledCard, StyledWrap, MaskControl, StyledCircleColor } from '../style
 
 export default function ColorPresetsOptions() {
   const { themeColorPresets, onChangeColorPresets, presetsOption } = useSettingsContext();
+
+  useEffect(() => {
+    console.log('mudou o tema', themeColorPresets)
+  },[themeColorPresets])
 
   return (
     <RadioGroup name="themeColorPresets" value={themeColorPresets} onChange={onChangeColorPresets}>

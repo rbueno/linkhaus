@@ -23,6 +23,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -59,10 +60,13 @@ import {
   MyPageAvatar
 } from '../../../sections/@dashboard/mypage/account';
 import EditBlockTitleDialog from '../../../sections/@dashboard/mypage/editBlockitemDialog/EditBlockTitleDialog'
+import AppWelcome from '../../../sections/@dashboard/mypage/AppWelcome'
 
 import { useAuthContext } from '../../../auth/useAuthContext'
 import api from '../../../utils/axios'
 import slugify from '../../../utils/slugify'
+import { bgGradient } from '../../../utils/cssStyles'
+import ColorPresetsOptions from '../../../components/settings/drawer/ColorPresetsOptions'
 
 // ----------------------------------------------------------------------
 
@@ -1686,6 +1690,7 @@ const theme = useTheme()
 
 export default function MyPage() {
   const { themeStretch } = useSettingsContext();
+  const theme = useTheme()
   const [addingSection, setAddingSection] = useState(false)
   const [settingSectionsVisible, setSettingSectionsVisible] = useState(null)
   const [sections, setSections] = useState([])
@@ -1831,10 +1836,23 @@ export default function MyPage() {
         <Typography variant='h3'>MyPage</Typography>
         <Typography variant='subtitle2'>Uma pagina com seu principal conteúdo</Typography>
         </Box> */}
+            <Box sx={{ color: theme.palette.primary.contrastText, backgroundColor: theme.palette.primary.main }} display='flex' p={1}>
+            <Typography variant='h6'>Cor do tema</Typography>
+          {/* <Box display='flex' flexDirection='column' alignItems='center'> */}
+            {/* <Typography sx={{ mr: 1 }}>Seu link:</Typography> */}
+            {/* <Box display='flex' alignContent='center' alignItems='center'> */}
+              {/* <Typography sx={{ fontSize: '16px', fontWeight: '600' }}>Cor do thema: azul</Typography> */}
+            {/* </Box> */}
+          {/* </Box> */}
+            {/* <Button variant='outlined'>Mudar</Button> */}
+          </Box>
+         <Box>
+          <ColorPresetsOptions /> 
+         </Box>
         <Box mb={2}>
           <Card>
               <Box m={2} >
-                <Alert severity='success' icon={false}>
+                <Box sx={{ color: theme.palette.primary.contrastText, backgroundColor: theme.palette.primary.main, borderRadius: 1 }} display='flex' alignItems='left' p={1}>
 
                       <Box display='flex' flexDirection='column' alignItems='center'>
                         {/* <Typography sx={{ mr: 1 }}>Seu link:</Typography> */}
@@ -1844,9 +1862,10 @@ export default function MyPage() {
                           <Typography sx={{ fontSize: '12px' }}>.linkhaus.app</Typography>
                         </Box>
                       </Box>
-                </Alert>
+                </Box>
                     <Box display='flex' justifyContent='flex-end'>
-                      <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditLink()}> <SettingsIcon fontSize='small' /> Editar Link</Button>
+                      <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditLink()}> <SettingsIcon fontSize='small' /> Editar link</Button>
+                      {/* <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditLink()}> <ColorLensIcon fontSize='small' /> Editar cor</Button> */}
                       {/* <Button variant='outlined' sx={{ m: 1 }} size="small">Visualizar </Button>  */}
                       <Button
                         sx={{ m: 1 }}

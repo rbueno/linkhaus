@@ -706,7 +706,7 @@ export function UserProfilePage({ business }) {
   const data = business
   console.log('UserProfilePage data', data)
   // eslint-disable-next-line no-prototype-builtins
-  const colorPreset = data?.themeColorPresets && availableThemeColorPresets.hasOwnProperty(data?.themeColorPresets) ? data?.themeColorPresets : 'default'
+  const colorPreset = data?.themeColor && availableThemeColorPresets.hasOwnProperty(data?.themeColor) ? data?.themeColor : 'default'
   useEffect(() => {
     if (storageAvailable) {
       onChangeColorPresets({ target: { value:  colorPreset }})
