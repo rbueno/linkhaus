@@ -189,7 +189,8 @@ export default function BusinessEdit({ editingWorkspace }) {
   };
 
   const handleFinshEdition = () => {
-    push(PATH_DASHBOARD.mypage.main);
+    // push(PATH_DASHBOARD.mypage.main);
+    console.log('edição concluída')
   }
 
   return (
