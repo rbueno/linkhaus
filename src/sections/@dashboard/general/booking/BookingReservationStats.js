@@ -7,32 +7,10 @@ import Chart, { useChart } from '../../../../components/chart';
 
 // ----------------------------------------------------------------------
 
-BookingReservationStats.propTypes = {
-  chart: PropTypes.object,
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-};
+export default function BookingReservationStats() {
 
-export default function BookingReservationStats({ title, subheader, chart, ...other }) {
-  const { categories, colors, series, options } = chart;
 
-  const chartOptions = useChart({
-    colors,
-    stroke: {
-      show: true,
-      width: 2,
-      colors: ['transparent'],
-    },
-    xaxis: {
-      categories,
-    },
-    tooltip: {
-      y: {
-        formatter: (value) => `$${value}`,
-      },
-    },
-    ...options,
-  });
+  
 
 
   const demostate = {
@@ -73,7 +51,7 @@ export default function BookingReservationStats({ title, subheader, chart, ...ot
 
 }
   return (
-    <Card {...other}>
+    <Card >
       <Chart options={demostate.options} series={demostate.series} type="line" height={350} />
       {/* <Box>
         <Typography>Teste</Typography>

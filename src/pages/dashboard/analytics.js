@@ -389,7 +389,7 @@ export default function GeneralBookingPage() {
 
           <Grid item xs={12} md={12}>
             <BookingReservationStats
-              title="Insigth"
+              // title="Insigth"
               // subheader="(+43% Check In | +12% Check Out) than last year"
               // chart={{
               //   categories: data.graph.map(item => item.clicks.x),
