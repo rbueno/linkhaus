@@ -339,27 +339,27 @@ export default function GeneralBookingPage() {
   const theme = useTheme();
 
   const { themeStretch } = useSettingsContext();
-  const { currentWorkspace } = useAuthContext()
-  const [filterService, setFilterService] = useState('Hoje')
-  const [intervalType, setIntervalType] = useState('hour')
+  // const { currentWorkspace } = useAuthContext()
+  // const [filterService, setFilterService] = useState('Hoje')
+  // const [intervalType, setIntervalType] = useState('hour')
 
-  const [data, setData] = useState({ graph: [], clicks: 0, views: 0 })
+  // const [data, setData] = useState({ graph: [], clicks: 0, views: 0 })
 
-  useEffect(() => {
-    async function getData() {
-      try {
-        const dataXY2 = await fetchData({ intervalType: 'hour' })
+  // useEffect(() => {
+  //   async function getData() {
+  //     try {
+  //       const dataXY2 = await fetchData({ intervalType: 'hour' })
 
-      setData({ graph: dataXY2, clicks: dataXY2.reduce((acc, item) => acc + item.clicks.y, 0), views: dataXY2.reduce((acc, item) => acc + item.views.y, 0) })
-      setFilterService('Hoje')
-      setIntervalType('hour')
-      } catch (error) {
-        console.log('deu erro no GeneralBookingPage useEffect', error)
-      }
-    }
+  //     setData({ graph: dataXY2, clicks: dataXY2.reduce((acc, item) => acc + item.clicks.y, 0), views: dataXY2.reduce((acc, item) => acc + item.views.y, 0) })
+  //     setFilterService('Hoje')
+  //     setIntervalType('hour')
+  //     } catch (error) {
+  //       console.log('deu erro no GeneralBookingPage useEffect', error)
+  //     }
+  //   }
 
-    getData()
-  }, [currentWorkspace])
+  //   getData()
+  // }, [currentWorkspace])
 
   return (
     <>
@@ -371,37 +371,37 @@ export default function GeneralBookingPage() {
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
-        <FetchController filterService={filterService} setFilterService={setFilterService} intervalType={intervalType} setIntervalType={setIntervalType} setData={setData}/>
+        {/* <FetchController filterService={filterService} setFilterService={setFilterService} intervalType={intervalType} setIntervalType={setIntervalType} setData={setData}/> */}
         <Grid container spacing={3}>
-          <Grid item xs={6} md={6}>
+          {/* <Grid item xs={6} md={6}>
             <BookingWidgetSummary
               title="Cliques"
               total={data.clicks}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={6} md={6}>
+          {/* <Grid item xs={6} md={6}>
             <BookingWidgetSummary
               title="Visualizações"
               total={data.views}
               />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={12}>
             <BookingReservationStats
               title="Insigth"
               // subheader="(+43% Check In | +12% Check Out) than last year"
-              chart={{
-                categories: data.graph.map(item => item.clicks.x),
-                series: [
-                  {
-                    data: [
-                      { name: 'Cliques', data: data.graph.map(item => item.clicks.y) },
-                      { name: 'Visualizações', data: data.graph.map(item => item.views.y) },
-                    ],
-                  }
-                ],
-              }}
+              // chart={{
+              //   categories: data.graph.map(item => item.clicks.x),
+              //   series: [
+              //     {
+              //       data: [
+              //         { name: 'Cliques', data: data.graph.map(item => item.clicks.y) },
+              //         { name: 'Visualizações', data: data.graph.map(item => item.views.y) },
+              //       ],
+              //     }
+              //   ],
+              // }}
             />
           </Grid>
 
