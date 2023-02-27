@@ -347,11 +347,15 @@ export default function GeneralBookingPage() {
 
   useEffect(() => {
     async function getData() {
-      const dataXY2 = await fetchData({ intervalType: 'hour' })
+      try {
+        const dataXY2 = await fetchData({ intervalType: 'hour' })
 
       setData({ graph: dataXY2, clicks: dataXY2.reduce((acc, item) => acc + item.clicks.y, 0), views: dataXY2.reduce((acc, item) => acc + item.views.y, 0) })
       setFilterService('Hoje')
       setIntervalType('hour')
+      } catch (error) {
+        console.log('deu erro no GeneralBookingPage useEffect', error)
+      }
     }
 
     getData()
@@ -380,7 +384,7 @@ export default function GeneralBookingPage() {
               />
           </Grid>
 
-          <Grid item xs={12} md={12}>
+          {/* <Grid item xs={12} md={12}>
             <BookingReservationStats
               title="Insigth"
               // subheader="(+43% Check In | +12% Check Out) than last year"
@@ -396,7 +400,7 @@ export default function GeneralBookingPage() {
                 ],
               }}
             />
-          </Grid>
+          </Grid> */}
 
        
         </Grid>
