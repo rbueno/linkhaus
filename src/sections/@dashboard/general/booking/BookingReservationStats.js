@@ -52,7 +52,7 @@ export default function BookingReservationStats() {
 }
   return (
     <Card >
-      <Chart options={demostate.options} series={demostate.series} type="line" height={350} />
+      <Chart options={demostate.options} series={demostate.series} type="line" height="350px" />
       {/* <Box>
         <Typography>Teste</Typography>
       </Box> */}
