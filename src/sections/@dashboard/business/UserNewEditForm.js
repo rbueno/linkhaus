@@ -124,7 +124,7 @@ export default function UserNewEditForm({ isEdit = false, editingWorkspace }) {
       reset();
       enqueueSnackbar(isEdit ? 'Mudança concluída' : 'Novo negócio criado');
       setSubmitting(false)
-      push(PATH_DASHBOARD.business.contextEdit);
+      push(PATH_DASHBOARD.mypage.main);
     } catch (error) {
       enqueueSnackbar(error.message && error.message, { variant: 'error' });
       console.error(error);
@@ -177,11 +177,11 @@ export default function UserNewEditForm({ isEdit = false, editingWorkspace }) {
               }
               {
                 !isEdit && <Box m={2}>
-                <Typography variant="h6" component="h6">Criar Nome do seu negócio / ou nome de perfil</Typography>
+                <Typography variant="h6" component="h6">Crie o seu link</Typography>
                 <Typography variant="subtitle1" component="h6">Você poderá alterá-los depois.</Typography>
               </Box>
               }
-                  <Box>
+                  {/* <Box>
                     <FormGroup>
                       <TextField
                         label="Nome"
@@ -192,13 +192,13 @@ export default function UserNewEditForm({ isEdit = false, editingWorkspace }) {
                         onChange={(e) => handleBusinessDisplayName(e.target.value)}
                       />
                     </FormGroup>
-                  </Box>
+                  </Box> */}
 
                   <Box>
                     {/* <FormGroup> */}
                     <Box display='flex' flexDirection='column'>
 
-                    <Typography sx={{ mr: 1 }}>Link demonstração:</Typography>
+                    {/* <Typography sx={{ mr: 1 }}>Link demonstração:</Typography> */}
                     {/* <Box display='flex' flexDirection='row' m={2}> */}
                     <p style={{ fontSize: '12px'}}>https://<strong><span style={{ fontSize: '16px'}}>{newBusinessName || 'seu-nome-aqui'}</span></strong>.linkhaus.app</p>
 
@@ -215,12 +215,12 @@ export default function UserNewEditForm({ isEdit = false, editingWorkspace }) {
                     </Box>
                       <TextField
                       fullWidth
-                        label="Link de compartilhamento"
+                        label="Seu link"
                         value={newBusinessName}
                         color="primary"
                         placeholder="Ex.: linkhaus"
                         error={newBusinessNameError !== null}
-                        helperText={newBusinessNameError && newBusinessNameError}
+                        helperText={newBusinessNameError || 'Este é o link que você irá utilizar para compartilhar em redes sociais e outros canais.'}
                         onChange={(e) => HandleSlugField(e.target.value)}
                         // InputProps={{
                         //   startAdornment: <InputAdornment position="start">@</InputAdornment>,
