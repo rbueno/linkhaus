@@ -7,7 +7,6 @@ import rtlPlugin from 'stylis-plugin-rtl';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 // @mui
-import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
@@ -28,6 +27,5 @@ export default function ThemeRtlLayout({ children }) {
     stylisPlugins: theme.direction === 'rtl' ? [prefixer, rtlPlugin] : [],
   });
 
-  // return <CacheProvider value={cacheRtl}>{children}</CacheProvider>;
-  return <Box>{children}</Box>;
+  return <CacheProvider value={cacheRtl}>{children}</CacheProvider>;
 }

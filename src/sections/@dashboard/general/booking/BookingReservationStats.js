@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 // @mui
-import { Card } from '@mui/material';
+import { Card, Box, Typography } from '@mui/material';
 // components
 import Chart, { useChart } from '../../../../components/chart';
 
@@ -36,7 +36,10 @@ export default function BookingReservationStats({ title, subheader, chart, ...ot
 
   return (
     <Card {...other}>
-      <Chart type="bar" series={series[0].data} options={chartOptions} height={364} />
+      {/* <Chart type="bar" series={series[0].data} options={chartOptions} height={364} /> */}
+      <Box>
+        <Typography>Teste</Typography>
+      </Box>
     </Card>
   );
 }
