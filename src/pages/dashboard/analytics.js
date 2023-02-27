@@ -86,12 +86,12 @@ export const data = {
   datasets: [
     {
       label: 'Dataset 1',
-      data: labels.map(() => Math.floor(Math.random() * 100)),
+      data: [27, 84, 29, 94, 39, 18, 40],
       backgroundColor: 'rgba(255, 99, 132, 0.5)',
     },
     {
       label: 'Dataset 2',
-      data: labels.map(() => Math.floor(Math.random() * 100)),
+      data: [94, 17, 39, 47, 93, 94, 37],
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
     },
   ],
