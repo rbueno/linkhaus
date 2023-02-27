@@ -36,7 +36,7 @@ export default function MUIAlertPage() {
   return (
     <>
       <Head>
-        <title> MUI Components: Alert | Minimal UI</title>
+        <title> MUI Components: Alert | Linkhaus UI</title>
       </Head>
 
       <Box

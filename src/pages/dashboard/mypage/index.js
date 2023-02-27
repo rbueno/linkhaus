@@ -1815,7 +1815,7 @@ export default function MyPage() {
     return (
     <>
       <Head>
-        <title> User: Account Settings | Minimal UI</title>
+        <title> User: Account Settings | Linkhaus UI</title>
         {/* <Script defer src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=places&callback=Function.prototype`} /> */}
         {/* <Script
         src={`https://maps.googleapis.com/maps/api/js?key=${process.env.GOOGLE_MAPS_API_KEY}&libraries=places&callback=Function.prototype`}

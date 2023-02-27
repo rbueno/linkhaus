@@ -18,7 +18,7 @@ export default function BlankPage() {
   return (
     <>
       <Head>
-        <title> Blank Page | Minimal UI</title>
+        <title> Blank Page | Linkhaus UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

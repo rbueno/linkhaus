@@ -81,7 +81,7 @@ export default function UserProfilePage() {
   return (
     <>
       <Head>
-        <title> User: Profile | Minimal UI</title>
+        <title> User: Profile | Linkhaus UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

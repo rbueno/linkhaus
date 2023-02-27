@@ -59,7 +59,7 @@ export default function DemoSnackbarPage() {
   return (
     <>
       <Head>
-        <title> Extra Components: Snackbar | Minimal UI</title>
+        <title> Extra Components: Snackbar | Linkhaus UI</title>
       </Head>
 
       <Box

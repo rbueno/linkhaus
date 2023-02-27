@@ -21,7 +21,7 @@ export default function PaymentPage() {
   return (
     <>
       <Head>
-        <title> Payment | Minimal UI</title>
+        <title> Payment | Linkhaus UI</title>
       </Head>
 
       <Container

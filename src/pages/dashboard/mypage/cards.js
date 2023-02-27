@@ -26,7 +26,7 @@ export default function UserCardsPage() {
   return (
     <>
       <Head>
-        <title> User: Cards | Minimal UI</title>
+        <title> User: Cards | Linkhaus UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

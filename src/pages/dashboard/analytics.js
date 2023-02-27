@@ -345,7 +345,6 @@ export default function GeneralBookingPage() {
 
   const [data, setData] = useState({ graph: [], clicks: 0, views: 0 })
 
-  console.log('=======> data', data)
   useEffect(() => {
     async function getData() {
       const dataXY2 = await fetchData({ intervalType: 'hour' })
@@ -361,73 +360,25 @@ export default function GeneralBookingPage() {
   return (
     <>
       <Head>
-        <title> General: Booking | Minimal UI</title>
+        <title> Métricas | Linkhaus </title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <FetchController filterService={filterService} setFilterService={setFilterService} intervalType={intervalType} setIntervalType={setIntervalType} setData={setData}/>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={6} md={6}>
             <BookingWidgetSummary
               title="Cliques"
               total={data.clicks}
-              icon={<BookingIllustration />}
             />
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <BookingWidgetSummary title="Visualizações" total={data.views} icon={<CheckInIllustration />} />
-          </Grid>
-
-          {/* <Grid item xs={12} md={6}>
+          <Grid item xs={6} md={6}>
             <BookingWidgetSummary
-              title="Check Out"
-              total={124000}
-              icon={<CheckOutIllustration />}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12} md={8}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <BookingTotalIncomes
-                  total={18765}
-                  percent={2.6}
-                  chart={{
-                    series: [111, 136, 76, 108, 74, 54, 57, 84],
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <BookingBookedRoom title="Booked Room" data={_bookingsOverview} />
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <BookingCheckInWidgets
-                  chart={{
-                    colors: [theme.palette.warning.main],
-                    series: [
-                      { label: 'Check In', percent: 72, total: 38566 },
-                      { label: 'Check Out', percent: 64, total: 18472 },
-                    ],
-                  }}
-                />
-              </Grid>
-            </Grid>
+              title="Visualizações"
+              total={data.views}
+              />
           </Grid>
-
-          <Grid item xs={12} md={4}>
-            <BookingRoomAvailable
-              title="Room Available"
-              chart={{
-                series: [
-                  { label: 'Sold out', value: 120 },
-                  { label: 'Available', value: 66 },
-                ],
-              }}
-            />
-          </Grid> */}
 
           <Grid item xs={12} md={12}>
             <BookingReservationStats
@@ -447,37 +398,7 @@ export default function GeneralBookingPage() {
             />
           </Grid>
 
-          {/* <Grid item xs={12} md={4}>
-            <BookingCustomerReviews
-              title="Customer Reviews"
-              subheader={`${_bookingReview.length} Reviews`}
-              list={_bookingReview}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12}>
-            <BookingNewestBooking
-              title="Newest Booking"
-              subheader="12 Booking"
-              list={_bookingNew}
-            />
-          </Grid> */}
-
-          {/* <Grid item xs={12}>
-            <BookingDetails
-              title="Booking Details"
-              tableData={_bookings}
-              tableLabels={[
-                { id: 'booker', label: 'Booker' },
-                { id: 'checkIn', label: 'Check In' },
-                { id: 'checkOut', label: 'Check Out' },
-                { id: 'status', label: 'Status' },
-                { id: 'phone', label: 'Phone' },
-                { id: 'roomType', label: 'Room Type' },
-                { id: '' },
-              ]}
-            />
-          </Grid> */}
+       
         </Grid>
       </Container>
     </>

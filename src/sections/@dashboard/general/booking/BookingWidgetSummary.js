@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 // @mui
 import { Card, Typography, Box } from '@mui/material';
-// utils
-import { fShortenNumber } from '../../../../utils/formatNumber';
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +11,7 @@ BookingWidgetSummary.propTypes = {
   total: PropTypes.number,
 };
 
-export default function BookingWidgetSummary({ title, total, icon, sx, ...other }) {
+export default function BookingWidgetSummary({ title, total, sx, ...other }) {
   return (
     <Card
       sx={{
@@ -34,17 +32,7 @@ export default function BookingWidgetSummary({ title, total, icon, sx, ...other 
         </Typography>
       </div>
 
-      <Box
-        sx={{
-          width: 120,
-          height: 120,
-          lineHeight: 0,
-          borderRadius: '50%',
-          bgcolor: 'background.neutral',
-        }}
-      >
-        {icon}
-      </Box>
+     
     </Card>
   );
 }

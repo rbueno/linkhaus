@@ -33,7 +33,7 @@ export default function FoundationIconsPage() {
   return (
     <>
       <Head>
-        <title> Foundations: Icons | Minimal UI</title>
+        <title> Foundations: Icons | Linkhaus UI</title>
       </Head>
 
       <Box

@@ -70,7 +70,7 @@ export default function AboutTeam() {
             color: 'text.secondary',
           }}
         >
-          Minimal will provide you support if you have any problems, our support team will reply
+          Linkhaus will provide you support if you have any problems, our support team will reply
           within a day and we also have detailed documentation.
         </Typography>
       </m.div>

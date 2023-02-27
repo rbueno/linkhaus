@@ -194,7 +194,7 @@ export default function FileManagerPage() {
   return (
     <>
       <Head>
-        <title> File Manager | Minimal UI</title>
+        <title> File Manager | Linkhaus UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

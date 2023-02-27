@@ -35,7 +35,7 @@ export default function UserEditPage() {
   return (
     <>
       <Head>
-        <title> User: Edit user | Minimal UI</title>
+        <title> User: Edit user | Linkhaus UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

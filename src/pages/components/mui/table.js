@@ -24,7 +24,7 @@ export default function MUITablePage() {
   return (
     <>
       <Head>
-        <title> MUI Components: Table | Minimal UI</title>
+        <title> MUI Components: Table | Linkhaus UI</title>
       </Head>
 
       <Box

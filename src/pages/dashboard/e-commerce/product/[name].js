@@ -95,7 +95,7 @@ export default function EcommerceProductDetailsPage() {
   return (
     <>
       <Head>
-        <title>{`Ecommerce: ${product?.name || ''} | Minimal UI`}</title>
+        <title>{`Ecommerce: ${product?.name || ''} | Linkhaus UI`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

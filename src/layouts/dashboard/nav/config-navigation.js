@@ -40,21 +40,6 @@ const navConfig = [
     items: [
       { title: 'Métricas', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
       { title: 'Editar página', path: PATH_DASHBOARD.mypage.main, icon: ICONS.dashboard },
-    ],
-  },
-  {
-    subheader: 'Gerenciamento',
-    items: [
-      {
-        title: 'negócio',
-        path: PATH_DASHBOARD.business.root,
-        icon: ICONS.banking,
-        children: [
-          // { title: 'todos', path: PATH_DASHBOARD.business.list },
-          { title: 'editar', path: PATH_DASHBOARD.business.contextEdit },
-          { title: 'criar novo', path: PATH_DASHBOARD.business.new },
-        ],
-      },
       {
         title: 'usuários',
         path: PATH_DASHBOARD.user.root,
@@ -67,6 +52,31 @@ const navConfig = [
       },
     ],
   },
+  // {
+  //   subheader: 'Gerenciamento',
+  //   items: [
+  //     // {
+  //     //   title: 'negócio',
+  //     //   path: PATH_DASHBOARD.business.root,
+  //     //   icon: ICONS.banking,
+  //     //   children: [
+  //     //     // { title: 'todos', path: PATH_DASHBOARD.business.list },
+  //     //     { title: 'editar', path: PATH_DASHBOARD.business.contextEdit },
+  //     //     { title: 'criar novo', path: PATH_DASHBOARD.business.new },
+  //     //   ],
+  //     // },
+  //     // {
+  //     //   title: 'usuários',
+  //     //   path: PATH_DASHBOARD.user.root,
+  //     //   icon: ICONS.user,
+  //     //   children: [
+  //     //     { title: 'todos', path: PATH_DASHBOARD.user.list },
+  //     //     { title: 'adicionar', path: PATH_DASHBOARD.user.new },
+  //     //     { title: 'minha conta', path: PATH_DASHBOARD.user.account },
+  //     //   ],
+  //     // },
+  //   ],
+  // },
   
   
 

@@ -9,7 +9,7 @@ import { StyledArrow } from './styles';
 
 MenuPopover.propTypes = {
   sx: PropTypes.object,
-  open: PropTypes.object,
+  open: PropTypes.bool,
   children: PropTypes.node,
   disabledArrow: PropTypes.bool,
   arrow: PropTypes.oneOf([

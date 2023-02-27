@@ -17,7 +17,7 @@ export default function AboutPage() {
   return (
     <>
       <Head>
-        <title> About us | Minimal UI</title>
+        <title> About us | Linkhaus UI</title>
       </Head>
 
       <AboutHero />
