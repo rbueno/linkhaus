@@ -110,7 +110,7 @@ export default function UserNewEditForm({ isEdit = false, editingWorkspace }) {
   const onSubmit = async () => {
     setSubmitting(true)
     const payload ={
-      company: displayName,
+      company: newBusinessName,
       slug: newBusinessName,
       editingWorkspaceId: isEdit && editingWorkspace._id
     }
@@ -122,7 +122,7 @@ export default function UserNewEditForm({ isEdit = false, editingWorkspace }) {
       // updateWorkspaces(workspaceSession)
       switchWorkspace(workspaceSession.currentWorkspace?._id)
       reset();
-      enqueueSnackbar(isEdit ? 'Mudança concluída' : 'Novo negócio criado');
+      enqueueSnackbar(isEdit ? 'Mudança concluída' : 'Novo link criado');
       setSubmitting(false)
       push(PATH_DASHBOARD.mypage.main);
     } catch (error) {
@@ -177,7 +177,7 @@ export default function UserNewEditForm({ isEdit = false, editingWorkspace }) {
               }
               {
                 !isEdit && <Box m={2}>
-                <Typography variant="h6" component="h6">Crie o seu link</Typography>
+                <Typography variant="h6" component="h6">Crie o link do seu negócio, perfil ou projeto</Typography>
                 <Typography variant="subtitle1" component="h6">Você poderá alterá-los depois.</Typography>
               </Box>
               }
@@ -220,7 +220,7 @@ export default function UserNewEditForm({ isEdit = false, editingWorkspace }) {
                         color="primary"
                         placeholder="Ex.: linkhaus"
                         error={newBusinessNameError !== null}
-                        helperText={newBusinessNameError || 'Este é o link que você irá utilizar para compartilhar em redes sociais e outros canais.'}
+                        helperText={newBusinessNameError || 'Este é o link que você irá compartilhar em redes sociais e outros canais.'}
                         onChange={(e) => HandleSlugField(e.target.value)}
                         // InputProps={{
                         //   startAdornment: <InputAdornment position="start">@</InputAdornment>,
@@ -232,7 +232,7 @@ export default function UserNewEditForm({ isEdit = false, editingWorkspace }) {
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton onClick={() => onSubmit()} variant="contained" loading={submitting}>
-                {!isEdit ? 'Criar negócio' : 'Salvar mudança'}
+                {!isEdit ? 'Criar link' : 'Salvar mudança'}
               </LoadingButton>
             </Stack>
           </Card>

@@ -10,11 +10,12 @@ import { UploadAvatar, Upload, UploadBox } from '../upload';
 
 RHFUploadAvatar.propTypes = {
   name: PropTypes.string,
+  setAvatarError: PropTypes.func,
 };
 
 // ----------------------------------------------------------------------
 
-export function RHFUploadAvatar({ name, ...other }) {
+export function RHFUploadAvatar({ name, setAvatarError, ...other }) {
   const { control } = useFormContext();
 
   return (
@@ -37,6 +38,8 @@ export function RHFUploadAvatar({ name, ...other }) {
               {error.message}
             </FormHelperText>
           )}
+          {!!error && setAvatarError(error.message)}
+          {!error && setAvatarError(null)}
         </div>
       )}
     />

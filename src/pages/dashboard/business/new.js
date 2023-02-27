@@ -24,11 +24,11 @@ export default function UserCreatePage() {
   return (
     <>
       <Head>
-        <title> User: Create a new user | Linkhaus UI</title>
+        <title> Criar Link | Linkhaus UI</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
-        <Typography variant="h4" sx={{ mb: 5}}>Criar um novo negógcio</Typography>
+        <Typography variant="h4" sx={{ mb: 5}}>Criar um novo link</Typography>
         {/* <HeaderBreadcrumbs
           heading="Create a new Business"
           links={[

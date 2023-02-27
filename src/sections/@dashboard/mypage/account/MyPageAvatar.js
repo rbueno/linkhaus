@@ -30,13 +30,14 @@ export default function MyPageAvatar() {
   const { user, currentWorkspace, updateWorkspaces } = useAuthContext();
   const [avatarFile, setAvatarFile] = useState(null)
   const [updatingAvatarFile, setUpdatingAvatarFile] = useState(false)
+  const [avatarError, setAvatarError] = useState(null)
   const [myPage, setMyPage] = useState(currentWorkspace.myPage)
 
 
   const UpdateUserSchema = Yup.object().shape({
     // displayName: Yup.string().required('Name is required'),
     // email: Yup.string().required('Email is required').email('Email must be a valid email address'),
-    photoURL: Yup.string().required('Avatar is required').nullable(true),
+    photoURL: Yup.string().required('Avatar é obrigatório').nullable(true),
     // phoneNumber: Yup.string().required('Phone number is required'),
     // country: Yup.string().required('Country is required'),
     // address: Yup.string().required('Address is required'),
@@ -82,6 +83,7 @@ export default function MyPageAvatar() {
 
     const imgData = new FormData();
     imgData.append('avatar', imageFile);
+    console.log('avatar update', imgData)
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -155,6 +157,7 @@ export default function MyPageAvatar() {
               name="photoURL"
               maxSize={3145728}
               onDrop={handleDrop}
+              setAvatarError={setAvatarError}
               // helperText={
               //   <Typography
               //     variant="caption"
@@ -171,9 +174,11 @@ export default function MyPageAvatar() {
               //   </Typography>
               // }
             />
+            {console.log('avatarError', avatarError)}
             {
-              avatarFile && <Stack spacing={2} mt={2}>
-              <LoadingButton variant='contained' color="success" loading={updatingAvatarFile} type="submit">Atualizar Avatar</LoadingButton>
+              avatarFile && !avatarError && <Stack spacing={2} mt={2} mb={8}>
+                <Typography variant='h3'>Confirmar atualização do avatar?</Typography>
+              <LoadingButton variant='contained' color="success" loading={updatingAvatarFile} type="submit">Confirmar</LoadingButton>
               <Button variant='outlined' color='error' onClick={() => setAvatarFile(null)}>Cancelar</Button>
             </Stack>
             }
