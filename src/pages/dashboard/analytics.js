@@ -384,7 +384,7 @@ export default function GeneralBookingPage() {
               />
           </Grid>
 
-          {/* <Grid item xs={12} md={12}>
+          <Grid item xs={12} md={12}>
             <BookingReservationStats
               title="Insigth"
               // subheader="(+43% Check In | +12% Check Out) than last year"
@@ -400,7 +400,7 @@ export default function GeneralBookingPage() {
                 ],
               }}
             />
-          </Grid> */}
+          </Grid>
 
        
         </Grid>
