@@ -65,6 +65,7 @@ import AppWelcome from '../../../sections/@dashboard/mypage/AppWelcome'
 import { useAuthContext } from '../../../auth/useAuthContext'
 import api from '../../../utils/axios'
 import slugify from '../../../utils/slugify'
+import localStorageAvailable from '../../../utils/localStorageAvailable'
 import { bgGradient } from '../../../utils/cssStyles'
 import ColorPresetsOptions from '../../../components/settings/drawer/ColorPresetsOptions'
 
@@ -107,6 +108,15 @@ const TABS = [
     component: <Box>Informe o seu endereço físico com um mapa super dinâmico</Box>,
   },
 ];
+
+const availableThemeColorPresets = {
+  default: 'default',
+  cyan: 'cyan',
+  purple: 'purple',
+  blue: 'blue',
+  orange: 'orange',
+  red: 'red'
+}
 
 const buildComponent = ({component, theme, businessSlug, businessId, setSettingVisible, settingVisible, data }) => {
   const iconComponent = component?.props?.icon && buildIcon(component.props.icon)
@@ -1379,6 +1389,52 @@ const EditBusinessDescription = ({ currentWorkspace, updateWorkspaces, isOpen })
 
   )
 }
+const EditColorTheme = ({ currentWorkspace, updateWorkspaces, isOpen }) => {
+  const [businessDescription, setBusinessDescription] = useState(currentWorkspace.businessId.description);
+  const [businessDescriptionError, setBusinessDescriptionError] = useState(null);
+  const [submittingBusinessDescription, setSubmittingBusinessDescription] = useState(false);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+
+  const handleBusinessDescrilption = (description) => {
+    if (description.length > 360) return;
+    // setDisplayName(name);
+    setBusinessDescription(description)
+    // HandleSlugField(name.trim());
+  };
+
+  const onSubmitBusinessDescription = async () => {
+    setSubmittingBusinessDescription(true)
+
+    const payload ={
+      businessDescription,
+    }
+
+    try {
+      const response = await api.put('v1/business/description', payload)
+      const { workspaceSession } = response.data
+
+      // updateWorkspaces(workspaceSession)
+      updateWorkspaces(workspaceSession)
+      enqueueSnackbar('Mudança concluída');
+      isOpen(false)
+    } catch (error) {
+      enqueueSnackbar(error.message && error.message, { variant: 'error' });
+      console.error(error);
+    }
+    setSubmittingBusinessDescription(false)
+  };
+
+  const action = async () => {
+    
+    isOpen(false)
+  }
+
+
+
+  return <ColorPresetsOptions isOpen={isOpen}/>
+}
 
 // const mock = [
 //   {
@@ -1699,10 +1755,22 @@ export default function MyPage() {
   const [openEditItemBlock, setOpenEditItemBlock] = useState(false);
   const [dialogContent, setDialogContent] = useState(null)
   // console.log('refresh currentWorkspace', currentWorkspace.myPage.sections)
+  const { onChangeColorPresets } = useSettingsContext();
+  const storageAvailable = localStorageAvailable();
+
+  // eslint-disable-next-line no-prototype-builtins
+  const colorPreset = currentWorkspace?.myPage?.themeColor && availableThemeColorPresets.hasOwnProperty(currentWorkspace?.myPage?.themeColor) ? currentWorkspace?.myPage?.themeColor : 'default'
+  useEffect(() => {
+    if (storageAvailable) {
+      onChangeColorPresets({ target: { value:  colorPreset }})
+    }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storageAvailable, onChangeColorPresets, colorPreset]);
 
   useEffect(() => {
     const refreshSections = currentWorkspace?.myPage?.sections || []
-    console.log('===========>>>>>>>>>> refresh currentWorkspace', currentWorkspace)
+
     setSections(refreshSections)
   }, [currentWorkspace])
   // const updateBlock = (data) => {
@@ -1725,12 +1793,11 @@ export default function MyPage() {
     const payload = { businessSlug }
     try {
       const { data } = await api.post('v1/section', payload)
-      console.log('sectionCreated', data)
       // setSections([...sections, data.myPage.sections])
 
       updateWorkspaces(data.workspaceSession)
     } catch (error) {
-      console.log('deu ruim', error)
+      console.log(error)
     }
 
     const newBlock =   {
@@ -1816,6 +1883,10 @@ export default function MyPage() {
     setDialogContent(<EditBusinessDescription isOpen={setOpenEditItemBlock} currentWorkspace={currentWorkspace} updateWorkspaces={updateWorkspaces} />)
     setOpenEditItemBlock(true)
   }
+  const handleDisplayEditColorTheme = () => {
+    setDialogContent(<EditColorTheme isOpen={setOpenEditItemBlock} currentWorkspace={currentWorkspace} updateWorkspaces={updateWorkspaces} />)
+    setOpenEditItemBlock(true)
+  }
 
     return (
     <>
@@ -1832,42 +1903,34 @@ export default function MyPage() {
       </Head>
 
       <Container disableGutters maxWidth='sm'>
-        {/* <Box m={2}>
-        <Typography variant='h3'>MyPage</Typography>
-        <Typography variant='subtitle2'>Uma pagina com seu principal conteúdo</Typography>
-        </Box> */}
-            <Box sx={{ color: theme.palette.primary.contrastText, backgroundColor: theme.palette.primary.main }} display='flex' p={1}>
-            <Typography variant='h6'>Cor do tema</Typography>
-          {/* <Box display='flex' flexDirection='column' alignItems='center'> */}
-            {/* <Typography sx={{ mr: 1 }}>Seu link:</Typography> */}
-            {/* <Box display='flex' alignContent='center' alignItems='center'> */}
-              {/* <Typography sx={{ fontSize: '16px', fontWeight: '600' }}>Cor do thema: azul</Typography> */}
-            {/* </Box> */}
-          {/* </Box> */}
-            {/* <Button variant='outlined'>Mudar</Button> */}
-          </Box>
-         <Box>
-          <ColorPresetsOptions /> 
-         </Box>
         <Box mb={2}>
           <Card>
               <Box m={2} >
-                <Box sx={{ color: theme.palette.primary.contrastText, backgroundColor: theme.palette.primary.main, borderRadius: 1 }} display='flex' alignItems='left' p={1}>
+                <Box
+                  sx={{ color: theme.palette.primary.contrastText, backgroundColor: theme.palette.primary.main, borderRadius: 1 }}
+                  display='flex' alignItems='left' p={1}>
 
-                      <Box display='flex' flexDirection='column' alignItems='center'>
-                        {/* <Typography sx={{ mr: 1 }}>Seu link:</Typography> */}
+                    <Button
+                        fullWidth
+                        variant='contained'
+                        // sx={{ m: 1 }}
+                        target="_blank"
+                        rel="noopener"
+                        href={`https://${currentWorkspace?.businessId?.slug}.linkhaus.app?ohlhv`}
+                        size="small"
+                        >
                         <Box display='flex' alignContent='center' alignItems='center'>
                           <Typography sx={{ fontSize: '12px' }}>https://</Typography>
                           <Typography sx={{ fontSize: '16px', fontWeight: '600' }}>{currentWorkspace?.businessId?.slug}</Typography>
                           <Typography sx={{ fontSize: '12px' }}>.linkhaus.app</Typography>
                         </Box>
-                      </Box>
+                    </Button>
                 </Box>
                     <Box display='flex' justifyContent='flex-end'>
                       <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditLink()}> <SettingsIcon fontSize='small' /> Editar link</Button>
-                      {/* <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditLink()}> <ColorLensIcon fontSize='small' /> Editar cor</Button> */}
+                      <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditColorTheme()}> <ColorLensIcon fontSize='small' /> Editar cor do tema</Button>
                       {/* <Button variant='outlined' sx={{ m: 1 }} size="small">Visualizar </Button>  */}
-                      <Button
+                      {/* <Button
                         sx={{ m: 1 }}
                         variant='outlined'
                         // endIcon={(<ChangeCircleIcon fontSize="small" />)}
@@ -1880,7 +1943,7 @@ export default function MyPage() {
                         size="small"
                       >
                         Visualizar
-                    </Button>
+                    </Button> */}
                     </Box>
               </Box>
           </Card>
