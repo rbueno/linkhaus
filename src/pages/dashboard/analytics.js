@@ -7,8 +7,9 @@ import Script from 'next/script';
 import { useTheme } from '@mui/material/styles';
 
 import Bowser from "bowser"
-
-
+// import 'react-app-polyfill/stable'
+// import useResizeObserver from "use-resize-observer";
+import ResizeObserver from "resize-observer-polyfill"
 import { Grid, Container, Typography, Box, TextField, Stack, MenuItem } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
@@ -44,7 +45,9 @@ import api from '../../utils/axios'
 // import { PATH_DASHBOARD } from '../../routes/paths'
 
 // ----------------------------------------------------------------------
-
+if (typeof window !== "undefined" && !window.ResizeObserver) {
+  window.ResizeObserver = ResizeObserver;
+}
 
 export const options = {
   responsive: true,
@@ -421,7 +424,7 @@ console.log('isValidBrowser ================>', isValidBrowser)
       <Head>
         <title> Métricas | Linkhaus </title>
       </Head>
-      <Script type="application/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=ResizeObserver" />
+      {/* <Script type="application/javascript" src="https://cdn.jsdelivr.net/npm/@juggle/resize-observer" /> */}
 
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <FetchController filterService={filterService} setFilterService={setFilterService} intervalType={intervalType} setIntervalType={setIntervalType} setData={setData}/>

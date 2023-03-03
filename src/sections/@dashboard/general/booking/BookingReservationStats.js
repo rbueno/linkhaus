@@ -21,6 +21,7 @@ export default function BookingReservationStats({ title, subheader, chart, ...ot
 
   const chartOptions = useChart({
     colors,
+    redrawOnWindowResize: true,
     stroke: {
       show: true,
       width: 2,
@@ -63,7 +64,7 @@ export default function BookingReservationStats({ title, subheader, chart, ...ot
           )}
         </Box>
       ))} */}
-      <Chart type="bar" series={series[0].data} options={chartOptions} height={364} />
+      <Chart  type="bar" series={series[0].data} options={chartOptions} height={364} />
     </Card>
   );
 }
