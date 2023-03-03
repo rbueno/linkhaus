@@ -880,6 +880,10 @@ Home.propTypes = {
 export default function Home({ business, client }) {
   console.log('== business', business)
   console.log('== client', client)
+  // const { push } = useRouter()
+  // useEffect(() => {
+  //   push('/auth/login')
+  // })
   if (business.pageSlug) return <UserProfilePage business={business} />
   if (business.iswww) return <LandingPage />
   return <LandingPage />
