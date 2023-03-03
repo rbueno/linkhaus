@@ -46,7 +46,7 @@ import api from '../../utils/axios'
 
 // ----------------------------------------------------------------------
 if (typeof window !== "undefined" && !window.ResizeObserver) {
-  window.ResizeObserver = ResizeObserver;
+  window.ResizeObserver = window.ResizeObserver || ResizeObserver;
 }
 
 export const options = {
