@@ -132,7 +132,8 @@ export default function UserListPage() {
      try {
       const response = await api.get('v1/deals/subscribers')
      setTableData(response.data.subscribes)
-     } catch (error) {
+    } catch (error) {
+       setTableData([])
       console.log(error)
      }
     }
