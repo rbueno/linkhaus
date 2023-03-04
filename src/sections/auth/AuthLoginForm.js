@@ -95,19 +95,19 @@ export default function AuthLoginForm() {
 
       <LoadingButton
         fullWidth
-        color="inherit"
+        // color="inherit"
         size="large"
         type="submit"
         variant="contained"
         loading={isSubmitSuccessful || isSubmitting}
-        sx={{
-          bgcolor: 'text.primary',
-          color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-          '&:hover': {
-            bgcolor: 'text.primary',
-            color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-          },
-        }}
+        // sx={{
+        //   bgcolor: 'text.primary',
+        //   color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+        //   '&:hover': {
+        //     bgcolor: 'text.primary',
+        //     color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+        //   },
+        // }}
       >
         Entrar
       </LoadingButton>

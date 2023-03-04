@@ -52,6 +52,10 @@ export const PATH_DASHBOARD = {
   mypage: {
     main: path(ROOTS_DASHBOARD, '/mypage')
   },
+  deal: {
+    main: path(ROOTS_DASHBOARD, '/deal'),
+    list: path(ROOTS_DASHBOARD, '/deal/list')
+  },
   mail: {
     root: path(ROOTS_DASHBOARD, '/mail'),
     all: path(ROOTS_DASHBOARD, '/mail/all'),

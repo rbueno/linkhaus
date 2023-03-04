@@ -10,7 +10,7 @@ import Bowser from "bowser"
 // import 'react-app-polyfill/stable'
 // import useResizeObserver from "use-resize-observer";
 import ResizeObserver from "resize-observer-polyfill"
-import { Grid, Container, Typography, Box, TextField, Stack, MenuItem } from '@mui/material';
+import { Grid, Container, Typography, Box, TextField, Stack, MenuItem, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
@@ -34,6 +34,9 @@ import {
   BookingCustomerReviews,
   BookingReservationStats,
 } from '../../sections/@dashboard/general/booking';
+import {
+  AppWelcome
+} from '../../sections/@dashboard/general/app';
 // assets
 import {
   BookingIllustration,
@@ -466,6 +469,12 @@ console.log('isValidBrowser ================>', isValidBrowser)
 
        
         </Grid>
+        <AppWelcome
+              title='Inscritos'
+              description="Confira os inscritos através do compoennt Capturar Contatos"
+             
+              action={<Button href="/dashboard/deal/list" variant="contained">Abrir lista</Button>}
+            />
       </Container>
     </>
   );

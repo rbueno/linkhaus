@@ -614,9 +614,9 @@ const buildComponent = ({ component, theme, businessSlug, businessId, data }) =>
   // <Button component={NextLink} href="/" size="large" variant="contained">
   //         Go to Home
   //       </Button>
-console.log('component ===========+>', component)
+
 if (!component?.props) return <></>
-  if (component.type === 'linkButton') {
+  if (component.type === 'linkButton' && component.props.link && component.props.text) {
     return (
       <Button
             {...(iconComponent ? { startIcon: iconComponent.iconComponent } : {})}
@@ -641,13 +641,13 @@ if (!component?.props) return <></>
             </Button>
     )
   }
-  if (component.type === 'paragraph') {
+  if (component.type === 'paragraph' && component.props.text) {
     return (
       <Typography textAlign="center" variant="body2">{component.props.text}</Typography>
     )
   }
 
-  if (component.type === 'googlemaps') {
+  if (component.type === 'googlemaps' && component.props.lat && component.props.lng && component.props.url) {
     return (
       <MapComponent
         lat={component.props.lat}
@@ -678,7 +678,7 @@ if (!component?.props) return <></>
       />
     )
   }
-  if (component.type === 'youtubeCardVideo') {
+  if (component.type === 'youtubeCardVideo' && component.props?.videoId) {
     return (
       <YoutubeCardVideo
         title={component.props?.title}
@@ -728,10 +728,10 @@ export function UserProfilePage({ business }) {
           p: theme.spacing(3, 0, 3, 0),
         }}
       >
-          {section.title && <Typography textAlign="center" variant="h6">{section.title}</Typography>  }
+          { section.title && <Typography textAlign="center" variant="h6">{section.title}</Typography>  }
             
           {
-            section.components.map(comp => buildComponent({ component: comp, theme, businessSlug: data.pageSlug, businessId: data.businessId, data }))
+            section.components && section.components.map(comp => buildComponent({ component: comp, theme, businessSlug: data.pageSlug, businessId: data.businessId, data }))
           }
 
       </Stack>

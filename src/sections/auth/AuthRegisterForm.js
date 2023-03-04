@@ -111,19 +111,19 @@ export default function AuthRegisterForm() {
 
         <LoadingButton
           fullWidth
-          color="inherit"
+          // color="inherit"
           size="large"
           type="submit"
           variant="contained"
           loading={isSubmitting || isSubmitSuccessful}
-          sx={{
-            bgcolor: 'text.primary',
-            color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-            '&:hover': {
-              bgcolor: 'text.primary',
-              color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
-            },
-          }}
+          // sx={{
+          //   bgcolor: 'text.primary',
+          //   color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+          //   '&:hover': {
+          //     bgcolor: 'text.primary',
+          //     color: (theme) => (theme.palette.mode === 'light' ? 'common.white' : 'grey.800'),
+          //   },
+          // }}
         >
           Criar conta
         </LoadingButton>

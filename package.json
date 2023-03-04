@@ -75,6 +75,7 @@
     "react-app-polyfill": "^3.0.0",
     "react-chartjs-2": "^5.2.0",
     "react-cool-onclickoutside": "^1.7.0",
+    "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.39.5",

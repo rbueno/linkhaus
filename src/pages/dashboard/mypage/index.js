@@ -127,7 +127,6 @@ const buildComponent = ({component, theme, businessSlug, businessId, setSettingV
 
   if (!component?.props) {
     return <Box
-    fullWidth
       size="large"
       // variant="outlined"
 
@@ -139,14 +138,13 @@ const buildComponent = ({component, theme, businessSlug, businessId, setSettingV
                   <AlertTitle sx={{ textTransform: 'capitalize' }}> Novo item adicionado </AlertTitle>
                   tipo: {componentDisplayName()}
                 </Alert>
-      
     </Box>
   }
   if (component.type === 'linkButton') {
     return (
       <Button
       fullWidth
-      {...(iconComponent ? { startIcon: iconComponent.iconComponent } : {})}
+      {...(iconComponent ? { startIcon: iconComponent } : {})}
       //  startIcon={iconComponent.iconComponent}
           size="large"
           variant="contained"
@@ -233,7 +231,7 @@ const EditBlockTitle = ({ sectionId, title: currentTitle, saveItemEdition, isOpe
       const { data } = await api.put(`v1/section/${sectionId}`, { title, businessSlug })
       saveItemEdition(data.workspaceSession)
     } catch(error) {
-      console.log('error', error)
+      console.log(error)
     }
     // saveItemEdition({ type: 'sectionTitle', title })
     isOpen(false)
@@ -336,7 +334,7 @@ const [addingItem, setAddingItem] = useState(false)
   return (
     <Box>
      <Box display='flex' alignItems='center' justifyContent='center' m={2}>
-          <Typography variant='subtitle2'>Adicionar novo item nesta seção</Typography>
+          <Typography variant='subtitle2'>Novo Item</Typography>
 
         </Box>
         <Tabs value={currentTab} onChange={(event, newValue) => setCurrentTab(newValue)}>
@@ -364,8 +362,6 @@ const [addingItem, setAddingItem] = useState(false)
 
 // eslint-disable-next-line react/prop-types
 const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, businessSlug }) => {
-  console.log('currentItemState', currentItemState)
-  console.log('businessSlug', businessSlug)
   const [link, setLink] = useState(currentItemState.props?.link)
   const [label, setLabel] = useState(currentItemState.props?.text)
   const [icon, setIcon] = useState(currentItemState.props?.icon?.id || null)
@@ -375,6 +371,7 @@ const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, busine
   const [showDeleteComponent, setShowDeleteComponent] = useState(false)
 
   function formatLink(rawLink) {
+    if (!rawLink) return ''
     if(rawLink.startsWith('https://') || rawLink.startsWith('http://')) return rawLink
     
     return `http://${rawLink}`
@@ -384,7 +381,6 @@ const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, busine
     const linkConfigByIconId = findLinkConfigByIconId(link)
 
     const linkFormatted = formatLink(link)
-    console.log('linkFormatted', linkFormatted)
     const payload = {
       componentId: currentItemState.componentId,
       businessSlug,
@@ -400,13 +396,13 @@ const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, busine
         link: linkFormatted
       }
     }
-    console.log('payload', payload)
+
     
     try {
       const { data } = await api.put(`v1/component/${currentItemState.componentId}`, payload)
       saveItemEdition(data.workspaceSession)
     } catch(error) {
-      console.log('error', error)
+      console.log(error)
     }
     setUpdatingComponent(false)
     isOpen(false)
@@ -419,7 +415,7 @@ const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, busine
       const { data } = await api.put(`v1/component/delete/${currentItemState.componentId}`, { businessSlug, sectionId: currentItemState.sectionId })
       saveItemEdition(data.workspaceSession)
     } catch(error) {
-      console.log('error', error)
+      console.log(error)
     }
     // saveItemEdition({ type: 'sectionTitle', title })
     isOpen(false)
@@ -545,7 +541,7 @@ const EditYoutubeCardVideo = ({ currentItemState, saveItemEdition, isOpen, busin
       const { data } = await api.put(`v1/component/${currentItemState.componentId}`, payload)
       saveItemEdition(data.workspaceSession)
     } catch(error) {
-      console.log('error', error)
+      console.log(error)
     }
     setUpdatingComponent(false)
     isOpen(false)
@@ -558,7 +554,7 @@ const EditYoutubeCardVideo = ({ currentItemState, saveItemEdition, isOpen, busin
       const { data } = await api.put(`v1/component/delete/${currentItemState.componentId}`, { businessSlug, sectionId: currentItemState.sectionId })
       saveItemEdition(data.workspaceSession)
     } catch(error) {
-      console.log('error', error)
+      console.log(error)
     }
     // saveItemEdition({ type: 'sectionTitle', title })
     isOpen(false)
@@ -1470,6 +1466,7 @@ const Section = ({
   businessSlug,
   upwardSection,
   updateSection,
+  sectionsLength,
   downwardSection,
   updateWorkspaces,
   settingSectionsVisible,
@@ -1481,7 +1478,7 @@ const Section = ({
   const [dialogContent, setDialogContent] = useState(null)
   const [settingVisible, setSettingVisible] = useState(null)
   // const [components, setComponents] = useState(section.components || [])
-console.log('======= === == >', businessId)
+// console.log('======= === == >', businessId)
 const theme = useTheme()
 
   const saveItemEdition = (data) => {
@@ -1513,8 +1510,8 @@ const theme = useTheme()
   // }
 
   const editItemComponent = ({ type, ...props }) => {
-    console.log('type', type)
-    console.log('props ==>', props)
+    // console.log('type', type)
+    // console.log('props ==>', props)
     if (type === 'sectionTitle') {
       setDialogContent( <EditBlockTitle title={section.title} sectionId={props.sectionId} businessSlug={businessSlug}  saveItemEdition={saveItemEdition} isOpen={setOpenEditItemBlock} />)
     }
@@ -1623,22 +1620,48 @@ const theme = useTheme()
       <Card >
 
       {/* <Container fullWidth> */}
-      <Stack
+      <Box mb={2} >
+      <Grid container>
+            <Grid item xs={3}>
+            <Box>
+                  <IconButton disabled={SectionIdx === 0} color='primary' size="small" onClick={() => upwardSection(SectionIdx)} >
+                    <ArrowUpwardIcon fontSize='small'/>
+                  </IconButton>
+                  <IconButton disabled={SectionIdx === sectionsLength - 1} color='primary' size="small" onClick={() => downwardSection(SectionIdx)} >
+                    <ArrowDownwardIcon fontSize='small'/>
+                  </IconButton>
+                </Box>
+            </Grid>
+            <Grid item xs={6} >
+            <Box mt={0.5} display='flex' textAlign='center' justifyContent='center' >
+              <Typography variant='h5'>{section.title || `Título da seção (opcional)`}</Typography>
+            </Box>
+            </Grid>
+            <Grid item xs={3}>
+            <IconButton color='primary' sx={{ ml: 1 }} size="small" onClick={() => editItemComponent({ type: 'sectionTitle', title: section.title, sectionId: section.sectionId })}>
+            <EditIcon fontSize='small'/>
+          </IconButton>
+            </Grid>
+          </Grid>
+      </Box>
+      <Box
         // spacing={2}
         direction="column"
       >
+        
       
-        <Box sx={{mb:2}}>
-        {
-          settingSectionsVisible === section.sectionId && <Box
+        {/* <Box sx={{mb:2}}>
+         
+        <Box display='flex' alignItems='center' justifyContent='center' >
+        <Box
           display='flex'
           alignItems='center'
           justifyContent='space-between'
-          sx={{
-            backgroundColor: '#F6F6F5',
-            // border: '#C0C0C0 1px solid',
-            marginTop: '22px'
-          }}
+          // sx={{
+          //   backgroundColor: '#F6F6F5',
+          //   // border: '#C0C0C0 1px solid',
+          //   marginTop: '22px'
+          // }}
         >
                 <Box>
                   <IconButton sx={{ m: 1 }} size="small" onClick={() => upwardSection(SectionIdx)} >
@@ -1650,25 +1673,21 @@ const theme = useTheme()
                 </Box>
 
             
-              <Button variant='contained' sx={{ m: 1 }} size="small" onClick={() => editItemComponent({ type: 'sectionTitle', title: section.title, sectionId: section.sectionId })} >
-                Editar
-              </Button>
+              
         </Box>
-        }
-        <Box display='flex' alignItems='center' justifyContent='center' sx={{ paddingLeft: '45px'}}>
           {
             !section.title && <Typography variant='body1'>Título da seção (opcional)</Typography>
           }
           {
             section.title && <Typography variant='h5'>{section.title}</Typography>
           }
-          <IconButton sx={{ m: 1 }} size="small" onClick={() => setSettingSectionsVisible(settingSectionsVisible === section.sectionId ? null : section.sectionId)}>
+          <IconButton sx={{ m: 1 }} size="small" onClick={() => editItemComponent({ type: 'sectionTitle', title: section.title, sectionId: section.sectionId })}>
             <EditIcon fontSize='small'/>
           </IconButton>
         </Box>
        
                         
-        </Box>
+        </Box> */}
 
             {
               section.components?.length > 0 && section.components.map((component, idx) => (
@@ -1687,18 +1706,19 @@ const theme = useTheme()
                                     }}
                                   >
                                           <Box>
-                                            <IconButton sx={{ m: 1 }} size="small" onClick={() => upwardComponent(idx, section)} >
+                                            <IconButton color='primary' disabled={idx === 0}  size="small" onClick={() => upwardComponent(idx, section)} >
                                               <ArrowUpwardIcon fontSize='small'/>
                                             </IconButton>
-                                            <IconButton sx={{ m: 1 }} size="small" onClick={() => downwardComponent(idx, section)} >
+                                            <IconButton color='primary' disabled={idx === section.components.length - 1} size="small" onClick={() => downwardComponent(idx, section)} >
                                               <ArrowDownwardIcon fontSize='small'/>
                                             </IconButton>
                                           </Box>
 
                                       
-                                        <Button variant='outlined' sx={{ m: 1 }} size="small" onClick={() => editItemComponent(component)} >
-                                          <SettingsIcon fontSize='small' /> Editar
-                                        </Button>
+                                        <IconButton color='primary'  size="small" onClick={() => editItemComponent(component)} >
+                                          {/* <SettingsIcon fontSize='small' /> Editar */}
+                                          <EditIcon fontSize='small'/>
+                                        </IconButton>
                                   </Box>
 
                     
@@ -1708,7 +1728,7 @@ const theme = useTheme()
               ))
             }
         
-        </Stack>
+        </Box>
       {/* </Container> */}
       <Divider />
       <Box m={2} display='flex' justifyContent='center'>
@@ -1735,7 +1755,7 @@ const theme = useTheme()
                 </Box>
               )
           )} */}
-          <Button variant='contained' onClick={() => handleAddComponent()}>Adicionar novo item</Button>
+          <Button variant='contained' onClick={() => handleAddComponent()}>Adicionar item nessa seção</Button>
       </Box>
       </Card>
     </Box>
@@ -1754,7 +1774,6 @@ export default function MyPage() {
   const { currentWorkspace, updateWorkspaces } = useAuthContext()
   const [openEditItemBlock, setOpenEditItemBlock] = useState(false);
   const [dialogContent, setDialogContent] = useState(null)
-  // console.log('refresh currentWorkspace', currentWorkspace.myPage.sections)
   const { onChangeColorPresets } = useSettingsContext();
   const storageAvailable = localStorageAvailable();
 
@@ -1783,8 +1802,6 @@ export default function MyPage() {
   //   })
   //   setBlocks(updated)
   //   // const updated = [...blocksToKeep, data]
-  //   // console.log('blocksToKeep', blocksToKeep)
-  //   // console.log('update blocks', data)
   // }
 
   const addSection = async () => {
@@ -1832,7 +1849,7 @@ export default function MyPage() {
       const { data } = await api.patch('v1/mypage/sectionSorting', payload)
       updateWorkspaces(data.workspaceSession)
      } catch(error) {
-      console.log('error', error)
+      console.log(error)
      }
 
   }
@@ -1861,7 +1878,6 @@ export default function MyPage() {
   }
 
   const updateSection = (data) => {
-    console.log('updateSection', data)
     const updated = sections.map(section => {
       if (section.sectionId === data.id) {
         return data
@@ -1916,7 +1932,7 @@ export default function MyPage() {
                         // sx={{ m: 1 }}
                         target="_blank"
                         rel="noopener"
-                        href={`https://${currentWorkspace?.businessId?.slug}.linkhaus.app?ohlhv`}
+                        href={`https://${currentWorkspace?.businessId?.slug}.linkhaus.app`}
                         size="small"
                         >
                         <Box display='flex' alignContent='center' alignItems='center'>
@@ -1956,7 +1972,7 @@ export default function MyPage() {
               <Box display='flex' alignItems='center' justifyContent='center' sx={{ paddingLeft: '45px'}}>
               
                 <Typography variant='h5'>{currentWorkspace?.businessId.name}</Typography>
-                <IconButton sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditBusinessName()}>
+                <IconButton color='primary' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditBusinessName()}>
                   <EditIcon fontSize='small'/>
                 </IconButton>
               </Box>
@@ -1969,7 +1985,7 @@ export default function MyPage() {
                 {
                   currentWorkspace?.businessId.description && <Typography variant='body1'>{currentWorkspace?.businessId.description}</Typography>
                 }
-                <IconButton sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditBusinessDescription()}>
+                <IconButton color='primary' sx={{ m: 1 }} size="small" onClick={() => handleDisplayEditBusinessDescription()}>
                   <EditIcon fontSize='small'/>
                 </IconButton>
             </Box>
@@ -1980,7 +1996,7 @@ export default function MyPage() {
         
 
         {
-         sections.length > 0 && sections.map((section, SectionIdx) => <Section key={section.sectionId.toString()} setSettingSectionsVisible={setSettingSectionsVisible} settingSectionsVisible={settingSectionsVisible} upwardSection={upwardSection} downwardSection={downwardSection} SectionIdx={SectionIdx} section={section} businessSlug={currentWorkspace?.myPage?.pageSlug} businessId={currentWorkspace?.businessId?._id} data={currentWorkspace?.myPage} updateSection={updateSection} updateWorkspaces={updateWorkspaces}/>)
+         sections.length > 0 && sections.map((section, SectionIdx) => <Section key={section.sectionId.toString()} setSettingSectionsVisible={setSettingSectionsVisible} settingSectionsVisible={settingSectionsVisible} upwardSection={upwardSection} downwardSection={downwardSection} SectionIdx={SectionIdx} sectionsLength={sections.length} section={section} businessSlug={currentWorkspace?.myPage?.pageSlug} businessId={currentWorkspace?.businessId?._id} data={currentWorkspace?.myPage} updateSection={updateSection} updateWorkspaces={updateWorkspaces}/>)
         }
 
         <Box m={2}>
