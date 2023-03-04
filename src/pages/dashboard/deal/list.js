@@ -129,12 +129,15 @@ export default function UserListPage() {
 
   useEffect(() => {
     async function fetchData() {
-     const response = await api.get('v1/deals/subscribers')
-     console.log('===> response.data', response.data.subscribes)
+     try {
+      const response = await api.get('v1/deals/subscribers')
      setTableData(response.data.subscribes)
+     } catch (error) {
+      console.log(error)
+     }
     }
     fetchData()
-  },[])
+  },[currentWorkspace])
 
   const dataInPage = dataFiltered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
