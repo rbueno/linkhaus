@@ -14,9 +14,9 @@ import { MotionViewport, varFade } from '../../components/animate';
 // ----------------------------------------------------------------------
 
 const StyledRoot = styled('div')(({ theme }) => ({
-  padding: theme.spacing(10, 0),
+  padding: theme.spacing(2, 0),
   [theme.breakpoints.up('md')]: {
-    padding: theme.spacing(15, 0),
+    padding: theme.spacing(2, 0),
   },
 }));
 
@@ -34,13 +34,29 @@ export default function HomeServiceL02() {
           justifyContent="space-between"
           spacing={{ xs: 5, md: 0 }}
         >
-          <Grid item xs={12} md={4}>
+          {
+            isDesktop && <>
+            <Grid item xs={12} md={4}>
             <Description />
           </Grid>
 
           <Grid item xs={12} md={7}>
             <Content />
           </Grid>
+            </>
+          }
+          {
+            !isDesktop && <>
+            <Grid item xs={12} md={7}>
+            <Content />
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Description />
+          </Grid>
+            </>
+          }
+          
 
           {/* {!isDesktop && (
             <Grid item xs={12} sx={{ textAlign: 'center' }}>

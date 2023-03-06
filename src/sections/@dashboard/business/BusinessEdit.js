@@ -253,7 +253,7 @@ export default function BusinessEdit({ editingWorkspace }) {
                     <Box display='flex' flexDirection='column'>
 
                     <Typography sx={{ mr: 1 }}>Link:</Typography>
-                    <p style={{ fontSize: '12px'}}>https://<strong><span style={{ fontSize: '16px'}}>{newBusinessName || 'seu-nome-aqui'}</span></strong>.linkhaus.app</p>
+                    <p style={{ fontSize: '12px'}}>https://<strong><span style={{ fontSize: '16px'}}>{newBusinessName || 'meu-negocio'}</span></strong>.linkhaus.app</p>
                     </Box>
                       <TextField
                       fullWidth

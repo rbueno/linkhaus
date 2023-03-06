@@ -14,9 +14,9 @@ import { MotionViewport, varFade } from '../../components/animate';
 // ----------------------------------------------------------------------
 
 const StyledRoot = styled('div')(({ theme }) => ({
-  padding: theme.spacing(10, 0),
+  padding: theme.spacing(2, 0),
   [theme.breakpoints.up('md')]: {
-    padding: theme.spacing(15, 0),
+    padding: theme.spacing(2, 0),
   },
 }));
 
@@ -70,7 +70,7 @@ function Description() {
     >
       <m.div variants={varFade().inDown}>
       <Typography variant="h2" sx={{ my: 3 }}>
-          Acompanhe suas métricas
+          Métricas e análises
         </Typography>
       </m.div>
 
@@ -81,7 +81,7 @@ function Description() {
             color: 'text.secondary',
           }}
         >
-          Insights sobre o desempenho de sua página para que consiga estar sempre melhorando a sua estratégia.
+          Acompanhe métricas como cliques e visualizações, para análises e insights sobre o desempenho completo de sua página.
         </Typography>
       </m.div>
 

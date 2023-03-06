@@ -14,9 +14,9 @@ import { MotionViewport, varFade } from '../../components/animate';
 // ----------------------------------------------------------------------
 
 const StyledRoot = styled('div')(({ theme }) => ({
-  padding: theme.spacing(10, 0),
+  padding: theme.spacing(2, 0),
   [theme.breakpoints.up('md')]: {
-    padding: theme.spacing(15, 0),
+    padding: theme.spacing(2, 0),
   },
 }));
 
@@ -70,7 +70,7 @@ function Description() {
     >
       <m.div variants={varFade().inDown}>
       <Typography variant="h2" sx={{ my: 3 }}>
-          Todo seu conteúdo em um simples link
+          Todo o seu conteúdo em um simples link
         </Typography>
       </m.div>
 
@@ -81,7 +81,7 @@ function Description() {
             color: 'text.secondary',
           }}
         >
-          Crie um smart web-site com todo o conteúdo exporto de forma fácil para consumir, como vídeos e links estratégicos.
+          Crie um mini site inteligente, fácil de utilizar e onde sua audiência irá encontrar todo o seu conteúdo de forma clara e objetiva.
         </Typography>
       </m.div>
 
@@ -95,7 +95,7 @@ function Description() {
 function Content() {
   return (
     <Box component={m.div} variants={varFade().inUp}>
-      <Image disabledEffect alt="rocket" src="/assets/images/home/linkhaus_okahub_02.jpg" />
+      <Image disabledEffect alt="rocket" src='/assets/images/home/linkhaus_okahub_banner_01.png' />
     </Box>
   );
 }

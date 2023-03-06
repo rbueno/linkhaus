@@ -46,7 +46,7 @@ const StyledDescription = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: theme.spacing(15, 0),
+  padding: theme.spacing(5, 0),
   height: '100%',
 }));
 
@@ -153,9 +153,9 @@ function Description() {
         </StyledGradientText>
       </m.div>
       <m.div variants={varFade().in}>
-        <Typography variant="h2" sx={{ textAlign: 'center' }}>
-          Converta seguidores <br />
-          em leads com
+        <Typography variant="h3" sx={{ textAlign: 'center' }}>
+          Liberte o seu negócio das amarras dos algoritmos!
+          
         </Typography>
       </m.div>
 
@@ -173,15 +173,15 @@ function Description() {
         </StyledGradientText>
       </m.div>
 
-      <m.div variants={varFade().in}>
+      {/* <m.div variants={varFade().in}>
         <Typography variant="body2" sx={{ textAlign: 'center' }}>
           Não fique refém das contantes alterações de regras das redes sociais. Matenha atualizado os contatos de seus seguidores e enriqueça a sua base de dados.
         </Typography>
-      </m.div>
+      </m.div> */}
 
     
 
-      <Stack
+      {/* <Stack
         spacing={3}
         sx={{
           textAlign: 'center',
@@ -200,17 +200,11 @@ function Description() {
           src='/assets/images/home/linkhaus_okahub_banner_01.png'
           // sx={{ position: 'absolute' }}
         />
-        {/* <Box
-          component={m.img}
-          animate={{ y: ['0%', '-100%'] }}
-          alt='hero_light_2'
-          src='/assets/images/home/hero_light_1.png'
-          sx={{ position: 'absolute' }}
-        /> */}
+      
       </Stack>
 
        
-      </Stack>
+      </Stack> */}
     </StyledDescription>
   );
 }

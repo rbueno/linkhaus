@@ -14,9 +14,9 @@ import { MotionViewport, varFade } from '../../components/animate';
 // ----------------------------------------------------------------------
 
 const StyledRoot = styled('div')(({ theme }) => ({
-  padding: theme.spacing(10, 0),
+  padding: theme.spacing(5, 0),
   [theme.breakpoints.up('md')]: {
-    padding: theme.spacing(15, 0),
+    padding: theme.spacing(2, 0),
   },
 }));
 
@@ -34,14 +34,27 @@ export default function HomeLookingFor() {
           justifyContent="space-between"
           spacing={{ xs: 5, md: 0 }}
         >
-          <Grid item xs={12} md={4}>
+          {
+            isDesktop && <><Grid item xs={12} md={4}>
             <Description />
           </Grid>
 
           <Grid item xs={12} md={7}>
             <Content />
+          </Grid></>
+          }
+
+          {
+            !isDesktop && <><Grid item xs={12} md={7}>
+            <Content />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Description />
           </Grid>
 
+          
+          </>
+          }
           {/* {!isDesktop && (
             <Grid item xs={12} sx={{ textAlign: 'center' }}>
               {VisitButton}
@@ -80,7 +93,7 @@ function Description() {
             color: 'text.secondary',
           }}
         >
-          Redes sociais mudam as regras o tempo todo. Não fique refém. Utilize nosso recurso de captura e gestão de leads e tenha uma base de dados própria com os contatos de seus seguidores.
+          Não deixe o seu negócio ficar refém dos algoritmos das redes sociais que vez ou outra podem derrubar o seu alcance. Utilize nosso recurso de captura e gestão de leads para construir a sua base própria com contatos de seus seguidores.
         </Typography>
       </m.div>
 
