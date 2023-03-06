@@ -85,7 +85,7 @@ function Description() {
     >
       <m.div variants={varFade().inDown}>
       <Typography variant="h2" sx={{ my: 3 }}>
-        Gerencie multiplas contas
+        Gerencie múltiplas contas
         </Typography>
       </m.div>
 

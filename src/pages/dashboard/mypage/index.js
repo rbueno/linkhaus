@@ -372,9 +372,11 @@ const EditBlockLinkButton = ({ currentItemState, saveItemEdition, isOpen, busine
 
   function formatLink(rawLink) {
     if (!rawLink) return ''
-    if(rawLink.startsWith('https://') || rawLink.startsWith('http://')) return rawLink
+
+    const linkInLowerCase = rawLink.toLowerCase()
+    if(linkInLowerCase.startsWith('https://') || linkInLowerCase.startsWith('http://')) return linkInLowerCase
     
-    return `http://${rawLink}`
+    return `http://${linkInLowerCase}`
   }
   const action = async () => {
     setUpdatingComponent(true)
