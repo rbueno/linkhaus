@@ -839,7 +839,7 @@ export function LandingPage() {
         <meta property="og:title" content="Liberte o seu negócio das amarras dos algoritmos." />
         <meta property="og:url" content="https://www.linkhaus.app" />
         <meta property="og:description" content="Não deixe o seu negócio ficar refém dos algoritmos das redes sociais que vez ou outra podem derrubar o seu alcance. Utilize nosso recurso de captura e gestão de leads para construir a sua base própria com contatos de seus seguidores." />
-        <meta property="og:image" content="https://www.linkhaus.app/logo/logo_linkhaus.png" />
+        <meta property="og:image" content="https://www.linkhaus.app/assets/images/home/linkhaus_okahub_01_captura_gestao_leads.jpg" />
       </Head>
 
       
