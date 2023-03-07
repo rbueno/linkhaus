@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef, Component } from 'react';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
+import axios from 'axios'
+import mongoose, { Schema } from 'mongoose'
 
 import FacebookIcon from '@mui/icons-material/Facebook'
 import InstagramIcon from '@mui/icons-material/Instagram'
@@ -704,7 +706,6 @@ export function UserProfilePage({ business }) {
   const { onChangeColorPresets } = useSettingsContext();
   const storageAvailable = localStorageAvailable();
   const data = business
-  console.log('UserProfilePage data', data)
   // eslint-disable-next-line no-prototype-builtins
   const colorPreset = data?.themeColor && availableThemeColorPresets.hasOwnProperty(data?.themeColor) ? data?.themeColor : 'default'
   useEffect(() => {
@@ -831,7 +832,14 @@ export function LandingPage() {
   return (
     <>
       <Head>
-        <title> Converta seguidores em leads | Linkhaus</title>
+        <title> Liberte o seu negócio das amarras dos algoritmos | Linkhaus</title>
+        <meta name="description" content="Não deixe o seu negócio ficar refém dos algoritmos das redes sociais que vez ou outra podem derrubar o seu alcance. Utilize nosso recurso de captura e gestão de leads para construir a sua base própria com contatos de seus seguidores." />
+        <link href="https://www.linkhaus.app" rel="canonical" />
+
+        <meta property="og:title" content="Liberte o seu negócio das amarras dos algoritmos." />
+        <meta property="og:url" content="https://www.linkhaus.app" />
+        <meta property="og:description" content="Não deixe o seu negócio ficar refém dos algoritmos das redes sociais que vez ou outra podem derrubar o seu alcance. Utilize nosso recurso de captura e gestão de leads para construir a sua base própria com contatos de seus seguidores." />
+        <meta property="og:image" content="https://www.linkhaus.app/logo/logo_linkhaus.png" />
       </Head>
 
       
@@ -878,8 +886,6 @@ Home.propTypes = {
 }
 
 export default function Home({ business, client }) {
-  console.log('== business', business)
-  console.log('== client', client)
   // const { push } = useRouter()
   // useEffect(() => {
   //   push('/auth/login')
@@ -890,6 +896,43 @@ export default function Home({ business, client }) {
 }
 
 export const getServerSideProps = async (prop) => {
+
+  
+
+mongoose.connect(process.env.MONGODB_URI || '', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const bioPageSchema = {
+    businessId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Business'
+    },
+    pageSlug: { type: String, require: true, index: { unique: true } },
+    address: { type: String },
+    description: { type: String },
+    name: { type: String },
+    themeColor: { type: String },
+    meta: { type: Object },
+    header: { type: Object },
+    sections: [Object],
+    active: { type: Boolean, default: true },
+    deletedAt: { type: Date, default: null },
+    s3BucketDir: { type: String },
+    avatarURL: { type: String }
+
+}
+
+let BioPage;
+
+const newSchema = new Schema(bioPageSchema, { timestamps: true })
+try {
+  // Trying to get the existing model to avoid OverwriteModelError
+  BioPage = mongoose.model("BioPage");
+} catch {
+    BioPage = mongoose.model("BioPage", newSchema);
+}
   const client = prop.req.headers.host ? prop.req.headers.host.split('.')[0] : null
 
   if (client === 'www') {
@@ -900,15 +943,29 @@ export const getServerSideProps = async (prop) => {
       },
     }
   }
+
+ 
+
+const myPage = await BioPage.findOne({ pageSlug: client })
+
   
   try {
-    const { data } = await api.get(`v1/mypage/${client}`)
-  console.log('mypage response', data.myPage)
+    // const { data } = await api.get(`v1/mypage/${client}`)
+    // const result = await fetch(`https://www.linkhaus.app/api/mypage?${client}`)
+    // const result = await fetch(`https://www.linkhaus.app/api/mypage/${client}`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json'
+    //   }
+    // })
+    // const result = await axios.default.get(`https://www.linkhaus.app/api/mypage/${client}`)
+  // console.log('axios mypage fetch', result)
   // const business = dataMock.find(item => item.businessSlug === 'meetmeat')
-  // console.log('business', business)
+  console.log('business', JSON.parse(JSON.stringify(myPage)))
   return {
     props: {
-      business: data.myPage,
+      business: JSON.parse(JSON.stringify(myPage)),
       client
     },
   }
@@ -916,7 +973,7 @@ export const getServerSideProps = async (prop) => {
     console.log('caiu no erro', error)
     return {
       props: {
-        business:{ iswww: false },
+        business: { iswww: false },
         client
       },
     }
